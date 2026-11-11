@@ -65,6 +65,7 @@ worm_instruments/
 ├── UISTYLE.md                      (existing)
 ├── PLAN.md                         (new — this file)
 ├── .gitignore                      (new — UI/node_modules/, Temp/)
+├── .gitattributes                  (new — `* text=auto eol=lf`, `*.png binary`, `*.wav binary`, `*.ogg binary`)
 ├── Shared/
 │   ├── Config.lua                  (new)
 │   ├── Derived.lua                 (new)
@@ -1057,6 +1058,7 @@ Fifteen phases. Each instrument phase follows the same shape: props (reference r
 **Goal:** both resources exist with their base structure, the framework layer answers, the page builds and the check tooling runs, so every later phase edits instead of creating.
 **To do:**
 - `git init` is already done by the planning session for the script; create `worm_instruments_assets` beside it (`resources\[wormhole_studios]\worm_instruments_assets`), `git init`, add its remote, and make its junction `C:\Users\alpha\Desktop\Dev\worm_instruments_assets`.
+- Line endings first, in both repositories: this machine's git has `core.autocrlf` on (it warned "LF will be replaced by CRLF" at the plan's commit), so write `.gitattributes` (section 3) before any other file, as `worm_hauntedgrounds` did, and confirm with `git ls-files --eol` that the working copies are LF (CODESTYLE 1.12). The assets' `.gitattributes` also marks `*.ydr`, `*.ytyp`, `*.ycd`, `*.ypt`, `*.awc` and `*.rel` binary.
 - Script: write `fxmanifest.lua` exactly as in section 3; `.gitignore`; every `(new)` Lua file with its block fences (CODESTYLE 2.1); `Utils` tables on both sides with `Utils.General.Debug`, `LoadModel`, `LoadAnimDict`, `LoadPtfx`, and `Utils.Player.Notify` over worm_lib's `notify`; `Shared/Config.lua` and `Shared/Derived.lua` (with `MergeInto`) as in section 4; locale scaffolding with the keys this phase uses; `Shared/Language.lua`; `SQL/worm_instruments.sql` (section 7).
 - Bridge: copy the three Bridge files and the `Config.Bridge` block from `worm_hauntedgrounds` unchanged; add the `Player` slot with `Bridge.Player.IsDown` in `Client/Bridge.lua` (one implementation per `getFrameworkType()` answer, read through `getPlayerData`).
 - UI: copy the scaffold from `worm_hauntedgrounds\UI` (`package.json`, `vite.config.js`, `index.html`, `Styles/`, the 20 components, `Hooks/`, `Utils/`, `Constants/`, `LocaleStore`), drop its pages and stores, rename the fallback resource name, write `Constants/Events.js` from section 8, an empty always-mounted root, `Styles/_motif.scss` with the staff mixin; copy `Grain.png`, `Rings.svg`, `CashStack.png`, `Padlock.png`; `npm install` (alone), `npm run build`.
