@@ -1,0 +1,39 @@
+@use "../../Styles/tokens" as *;
+
+// The brand mark: dot, filled word, outlined word, then the breadcrumb in the meta size.
+.Mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: $Size1;
+    white-space: nowrap;
+}
+
+.Dot {
+    width: $Size2;
+    height: $Size2;
+    margin-right: $Size1;
+    border-radius: $RadiusDot;
+    background: $ColorBrand;
+}
+
+.First,
+.Second {
+    // the title's step: a hairline outline on anything smaller reads as a smudge
+    @include Display($TypeTitle);
+}
+
+.Second {
+    @include Outlined;
+}
+
+.Crumb {
+    margin-left: $Size2;
+    padding-left: $Size2;
+    border-left: $BorderHairline;
+    font-size: $TypeMeta;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow;
+    text-transform: uppercase;
+    color: $ColorTextMuted;
+}

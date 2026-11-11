@@ -1,0 +1,18 @@
+// UI/src/Styles/_brand.scss
+// The Wormhole Studios identity (UISTYLE 3.1, 3.2): the brand colour ramp and the three families. Imported by
+// _tokens.scss only. Never edited per script: a change here is a brand decision and lands in every script.
+
+// The brand colour is #00ffc3. At full strength over an area it is harsh (the owner, 2026-11-01: "çok cırtlak"), so it
+// is a ramp: the neon is kept for the smallest marks, and the working accent is the same hue two steps darker.
+$ColorBrand: #00ffc3; // identity: the logo, status dots, the handwritten mark, a hairline underline -- never an area
+$ColorAccent: #16caa0; // working accent: primary button, selected border, active tab, current step
+$ColorAccentDeep: #0f8f72; // pressed state, hold-sweep base, accent on anything larger than a button
+
+// Condensed uppercase display, a squared technical sans for UI text, and the handwritten signature (UISTYLE 10.3) only.
+// All three come from the one Google Fonts link in UI/index.html; each stack falls back to a font Windows has.
+// The display face is Saira Condensed at 700 (the owner, 2026-11-01, of four set side by side: Bebas Neue read too
+// close to the reference pack's).
+$FontDisplay: "Saira Condensed", "Impact", sans-serif;
+$FontDisplayWeight: 700;
+$FontBody: "Chakra Petch", "Segoe UI", sans-serif;
+$FontMark: "Permanent Marker", cursive;

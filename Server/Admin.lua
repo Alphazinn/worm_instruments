@@ -1,0 +1,1 @@
+-- Bans, no-playing zones and silencing, kept in the database (PLAN section 3). Written from Phase 14.

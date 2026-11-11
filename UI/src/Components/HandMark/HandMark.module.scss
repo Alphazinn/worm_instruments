@@ -1,0 +1,11 @@
+@use "../../Styles/tokens" as *;
+
+// The one place the marker font appears (UISTYLE 10.3), at the meta size the neon may colour text at.
+.Mark {
+    display: inline-block;
+    font-family: $FontMark;
+    font-size: $TypeMeta;
+    color: $ColorBrand;
+    transform: rotate(-4deg);
+    white-space: nowrap;
+}

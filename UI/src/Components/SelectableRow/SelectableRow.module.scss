@@ -1,0 +1,62 @@
+@use "../../Styles/tokens" as *;
+
+// A list row (UISTYLE 6.9): the number, the content, the trailing part. Hover is the raised surface and the strong
+// border; selected is the accent border and its soft fill, nothing else moves.
+.Row {
+    display: flex;
+    align-items: center;
+    gap: $Size3;
+    width: 100%;
+    min-height: $Size4 + $Size2;
+    padding: $Size2 $Size3;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+    font: inherit;
+    color: $ColorText;
+    text-align: left;
+}
+
+.Pressable {
+    cursor: pointer;
+    transition: background $MotionFast $MotionEase, border-color $MotionFast $MotionEase;
+
+    &:hover {
+        border-color: $ColorBorderStrong;
+    }
+
+    :global([data-input="keyboard"]) &:focus-visible {
+        outline: $Hairline solid var(--Accent);
+    }
+}
+
+.Selected,
+.Selected:hover {
+    @include Selected;
+}
+
+.Number {
+    @include Display($TypeBody);
+    flex: none;
+    min-width: $Size4;
+    color: $ColorTextFaint;
+}
+
+.Current {
+    color: var(--Accent);
+}
+
+.Body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: $Size1 * 0.5;
+    min-width: 0;
+}
+
+.Trailing {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: $Size2;
+}

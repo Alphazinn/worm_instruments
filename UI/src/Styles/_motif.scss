@@ -1,0 +1,35 @@
+// UI/src/Styles/_motif.scss
+// The script's own motif (UISTYLE 1.1 and 11.0; PLAN section 12, the owner picked "Nota kâğıdı", 2026-11-12): the
+// five-line staff. Five hairlines run through the play screen's card and strips, and chips sit on them like notes; the
+// staff ribbon above the instrument is the same staff made live. Unlike _tokens.scss and _brand.scss, this file is this
+// script's alone. Built from the tokens only (UISTYLE 11.0): a staff line is a $ColorBorder hairline, the gap between
+// two is $Size1. It never takes the neon, never stands bare on the game (UISTYLE 4.1), and tier C takes none.
+
+@use "./tokens" as *;
+
+// How many lines a staff has: music's own five.
+$StaffLines: 5;
+
+// The distance from one line to the next.
+$StaffGap: $Size1;
+
+// The staff's whole height, first line to last: four gaps.
+$StaffHeight: calc(#{$StaffGap} * #{$StaffLines - 1});
+
+// The staff drawn on a surface: five hairlines, $StaffGap apart, centred on the surface's height. One repeating
+// hairline gradient band clipped to the five lines' height is the cheapest way to draw them -- no element per line.
+// The gradient is a hairline's hard edge (two stops at one place), not a colour fade, so it is not UISTYLE 3's banned
+// gradient fill.
+@mixin Staff {
+    background-color: $ColorSurface;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        $ColorBorder 0,
+        $ColorBorder 0.1vh,
+        transparent 0.1vh,
+        transparent $StaffGap
+    );
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 100% calc(#{$StaffHeight} + 0.1vh);
+}

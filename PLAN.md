@@ -90,6 +90,7 @@ worm_instruments/
 ├── Server/
 │   ├── Bridge.lua                  (new — copied)
 │   ├── Utils.lua                   (new)
+│   ├── Database.lua                (new — copied from worm_hauntedgrounds: runs SQL/worm_instruments.sql on every start)
 │   ├── Main.lua                    (new — items, sessions, the performers' list, restrictions)
 │   ├── Notes.lua                   (new — validation and relay)
 │   ├── Busking.lua                 (new — set up, tips, passers-by)
@@ -759,6 +760,7 @@ Server owners must register these items in their inventory; repeat this list in 
 
 - **What persists:** instrument bans and the no-playing zones added in game. Nothing else survives a restart: sessions, placed instruments, cases and tip totals all end with the resource.
 - **Mechanism:** `Bridge.Database` (`Query`, `Insert`, `Execute`).
+- **Set up by the resource itself**, as every worm_ script does (the owner, 2026-11-12): `Server/Database.lua` (copied from worm_hauntedgrounds) reads `SQL/worm_instruments.sql` on every start, runs each `CREATE TABLE IF NOT EXISTS` through `Bridge.Database`, asks the database that both tables exist and sets `Database.IsReady`; whatever reads or writes the tables waits for it. Nobody runs the file by hand.
 - **Schema** — in `SQL/worm_instruments.sql`:
   - table `worm_instruments_bans` — `id` (INT, auto, key), `identifier` (VARCHAR 64, indexed — the banned character), `player_name` (VARCHAR 64), `reason` (VARCHAR 120), `banned_by` (VARCHAR 64 — the admin's character name), `created_at` (INT, unix seconds), `ends_at` (INT, unix seconds; 0 = for ever)
   - table `worm_instruments_zones` — `id` (INT, auto, key), `name` (VARCHAR 48), `x`, `y`, `z` (FLOAT), `radius` (FLOAT), `added_by` (VARCHAR 64), `created_at` (INT)
@@ -1059,7 +1061,7 @@ Fifteen phases. Each instrument phase follows the same shape: props (reference r
 **To do:**
 - `git init` is already done by the planning session for the script; create `worm_instruments_assets` beside it (`resources\[wormhole_studios]\worm_instruments_assets`), `git init`, add its remote, and make its junction `C:\Users\alpha\Desktop\Dev\worm_instruments_assets`.
 - Line endings first, in both repositories: this machine's git has `core.autocrlf` on (it warned "LF will be replaced by CRLF" at the plan's commit), so write `.gitattributes` (section 3) before any other file, as `worm_hauntedgrounds` did, and confirm with `git ls-files --eol` that the working copies are LF (CODESTYLE 1.12). The assets' `.gitattributes` also marks `*.ydr`, `*.ytyp`, `*.ycd`, `*.ypt`, `*.awc` and `*.rel` binary.
-- Script: write `fxmanifest.lua` exactly as in section 3; `.gitignore`; every `(new)` Lua file with its block fences (CODESTYLE 2.1); `Utils` tables on both sides with `Utils.General.Debug`, `LoadModel`, `LoadAnimDict`, `LoadPtfx`, and `Utils.Player.Notify` over worm_lib's `notify`; `Shared/Config.lua` and `Shared/Derived.lua` (with `MergeInto`) as in section 4; locale scaffolding with the keys this phase uses; `Shared/Language.lua`; `SQL/worm_instruments.sql` (section 7).
+- Script: write `fxmanifest.lua` exactly as in section 3; `.gitignore`; every `(new)` Lua file with its block fences (CODESTYLE 2.1); `Utils` tables on both sides with `Utils.General.Debug`, `LoadModel`, `LoadAnimDict`, `LoadPtfx`, and `Utils.Player.Notify` over worm_lib's `notify`; `Shared/Config.lua` and `Shared/Derived.lua` (with `MergeInto`) as in section 4; locale scaffolding with the keys this phase uses; `Shared/Language.lua`; `SQL/worm_instruments.sql` (section 7) and `Server/Database.lua`, which runs it on every start.
 - Bridge: copy the three Bridge files and the `Config.Bridge` block from `worm_hauntedgrounds` unchanged; add the `Player` slot with `Bridge.Player.IsDown` in `Client/Bridge.lua` (one implementation per `getFrameworkType()` answer, read through `getPlayerData`).
 - UI: copy the scaffold from `worm_hauntedgrounds\UI` (`package.json`, `vite.config.js`, `index.html`, `Styles/`, the 20 components, `Hooks/`, `Utils/`, `Constants/`, `LocaleStore`), drop its pages and stores, rename the fallback resource name, write `Constants/Events.js` from section 8, an empty always-mounted root, `Styles/_motif.scss` with the staff mixin; copy `Grain.png`, `Rings.svg`, `CashStack.png`, `Padlock.png`; `npm install` (alone), `npm run build`.
 - Assets resource: `fxmanifest.lua` (metadata, the `DLC_ITYP_REQUEST` glob, a comment saying it is never restarted alone), `CREDITS.md`, empty `Source/` and `stream/`.
@@ -1068,9 +1070,9 @@ Fifteen phases. Each instrument phase follows the same shape: props (reference r
 **Affected files:** every file of section 3 marked `(new)` except the per-feature UI components, pages, modals and the sound assets; both manifests; the check starter files.
 **Checks:** `checkskeleton` — the manifest's shared order, every Bridge slot the code reads exists, no `worm_hauntedgrounds` text left anywhere in the tree, every event of `Constants/Events.js` named with this resource's prefix, En/Tr parity and the key count; style guard green. Proved by `injectskeleton`.
 **Test steps:**
-- Run the SQL file once, then restart the whole server with `Config.Debug = true`. *(The session reads both logs: no errors, the Bridge's detection report, both Bridge "initialized" lines.)*
+- Restart the whole server with `Config.Debug = true` and join. *(The session reads both logs: no errors, the Bridge's detection report, both Bridge "initialized" lines, the schema's "verified" line with both tables.)*
 **Commit:** `feat(core): scaffold project skeleton` (script) · `feat(core): scaffold the assets resource` (assets)
-**As applied:**
+**As applied:** 2026-11-12. Agreed with the owner before writing: `server.cfg` untouched (its `ensure [wormhole_studios]` after `worm_lib` already starts both resources; the manifest's dependency starts the assets first); `Views/ScreenTexture` copied with the scaffold (the play screen's grain and vignette, Phase 3); `Bridge.Player.IsDown` reads `metadata.isdead` / `inlaststand` on qb and qbx, the native death on esx; `checkskeleton` started from an earlier script's. Found while writing: the style guard and `injectstyle` come from worm_hauntedgrounds' (its JS / SCSS rules were proved on the copied UI; worm_movement's has none), `runall`, `idle` and `luaconfig` from worm_movement's; the copied `HoldButton` reads a `Hold` key section 5 did not list, so it was added (216 keys in all); `Utils/Accent.js` no longer recolours the neon (worm_hauntedgrounds' own exception to UISTYLE 3.1); the files of later phases hold one line saying what they will hold (CODESTYLE 2.1 skips empty blocks); `stream/` is not kept empty in git (a streamed `.gitkeep` warned in F8), Phase 3 makes it. The owner's change in test: the tables are set up by the resource itself, as in every worm_ script — `Server/Database.lua` copied from worm_hauntedgrounds runs the SQL file on every start (section 7). Proved: `checkskeleton` SK1–SK11 by `injectskeleton`, SK8 red on purpose; the guard green, its changed rules proved; both repos LF; the server log shows both Bridges' detection, "Server Bridge initialized" and "schema verified, 2 statements, tables: worm_instruments_bans, worm_instruments_zones", F8 clean.
 
 ### Phase 2 — The sound engine and the ear test
 **Goal:** the page can play any instrument's notes from samples, and the owner has heard three instruments made both ways and chosen the method.
@@ -1335,7 +1337,7 @@ Fifteen phases. Each instrument phase follows the same shape: props (reference r
 - The full `runall.py`, every set, no scoping (CODESTYLE 5.3).
 - A clean install on the owner's server from the two packages: SQL, items, `server.cfg` order, the ACE line; the logs read. worm_lib carries the other frameworks: every export the script calls is checked once more against `worm_lib`'s README and its use in the other worm_ scripts, and anything that could not be verified is listed for the owner.
 - Resmon: 0.00 ms with no instrument out and nobody playing nearby.
-- Install notes: the eighteen items (name, label, usable), the SQL file, the ACE line, the dependencies (ox_lib, worm_lib, oxmysql, OneSync), the assets resource and its full-restart rule, the two commands, the sound credits.
+- Install notes: the eighteen items (name, label, usable), the SQL file (the resource runs it itself on every start; it is there for an owner who wants to see or run it), the ACE line, the dependencies (ox_lib, worm_lib, oxmysql, OneSync), the assets resource and its full-restart rule, the two commands, the sound credits.
 - The package leaves out `.claude`, `Plans`, `Temp`, the three standard documents, `PLAN.md`, and everything under `UI/` except the build output; the assets package leaves out `Source/`.
 - `Config.Debug = false` — the very last change.
 **Affected files:** every file that still holds a temporary command or tuner (edit); `Shared/Config.lua` (edit — Debug); the install notes (new); assets `CREDITS.md` (edit).

@@ -1,0 +1,33 @@
+@use "../../Styles/tokens" as *;
+
+// A dot and its word (UISTYLE 4.3): the word stays at $TypeEyebrow, the only size the neon may colour text at.
+.Status {
+    display: inline-flex;
+    align-items: center;
+    gap: $Size1;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.Dot {
+    width: $Size1 * 1.5;
+    height: $Size1 * 1.5;
+    border-radius: $RadiusDot;
+    background: currentColor;
+}
+
+.Brand {
+    color: $ColorBrand;
+}
+
+.Warning {
+    color: $ColorWarning;
+}
+
+.Faint {
+    color: $ColorTextFaint;
+}

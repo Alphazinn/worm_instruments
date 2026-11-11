@@ -1,0 +1,138 @@
+// UI/src/Styles/_tokens.scss
+// Why: one file holds every visual decision so a component can only pick, never invent (UISTYLE PART 2). Change a
+// value here and every script follows. A component brings it in with @use "../../Styles/tokens" as *; no literal
+// colour and no literal vh size appears in a component's SCSS, 0 and 100% excepted.
+
+@use "sass:color";
+@use "./brand" as Brand;
+
+// colour -- neutrals, a hair toward the brand's hue
+$ColorBackground: #0b0d0d; // page / scrim base
+$ColorSurface: #131717; // cards
+$ColorSurfaceRaised: #1a1f1f; // inputs, nested cards, hover
+$ColorBorder: rgba(255, 255, 255, 0.07); // every card and control border
+$ColorBorderStrong: rgba(255, 255, 255, 0.14); // focused / selected border when not accent
+$ColorText: #f1f4f3; // primary
+$ColorTextMuted: #98a09e; // descriptions, meta
+$ColorTextFaint: #5a6361; // eyebrows, disabled, inactive tabs
+
+// semantic -- status only, never decoration; there is no positive colour (live is the brand's) and no danger colour (a
+// destructive action uses the accent)
+$ColorWarning: #ffc53d; // pending, out, unsaved, an offer's clock
+
+// scrim
+$ColorScrim: rgba(5, 8, 8, 0.78); // tier-B over the game
+
+// brand ramp -- the accent is read at runtime from --Accent. The neon is a property too (--Brand, set once in
+// Global.scss), but nothing overrides it: the marks stay Wormhole's whatever accent the server picks (UISTYLE 3.1).
+$ColorBrand: var(--Brand);
+$ColorBrandHalf: var(--BrandHalf); // a status chip's outline
+$ColorBrandDefault: Brand.$ColorBrand;
+$ColorBrandHalfDefault: color.change(Brand.$ColorBrand, $alpha: 0.5);
+$ColorAccentDefault: Brand.$ColorAccent;
+$ColorAccentDeepDefault: Brand.$ColorAccentDeep;
+$ColorAccentSoftDefault: color.change(Brand.$ColorAccent, $alpha: 0.12); // selected row / card fill
+$ColorAccentGlowDefault: color.change(Brand.$ColorAccent, $alpha: 0.3); // the primary button's outer glow
+
+// type
+$FontDisplay: Brand.$FontDisplay;
+$FontBody: Brand.$FontBody;
+$FontMark: Brand.$FontMark;
+$FontDisplayWeight: Brand.$FontDisplayWeight;
+$TypeEyebrow: 0.93vh; // 10px -- tracked uppercase labels, key-hint words
+$TypeMeta: 1.11vh; // 12px -- descriptions under a title, meta rows, chips
+$TypeBody: 1.39vh; // 15px -- setting titles, list item names, buttons
+$TypeTitle: 2.22vh; // 24px -- block headings (display)
+$TypeHeading: 4.44vh; // 48px -- page headings, modal headings (display)
+$TypeHero: 11.1vh; // 120px -- tier A only: one word per screen (display)
+$TrackEyebrow: 0.18em;
+$TrackDisplay: 0.02em;
+$TrackButton: 0.12em;
+$LineDisplay: 0.95;
+$LineBody: 1.35;
+$LineDescription: 1.45;
+
+// space
+$Size1: 0.37vh; //  4px -- a dot and its word, chips
+$Size2: 0.74vh; //  8px -- grid cells, stacked rows
+$Size3: 1.48vh; // 16px -- card padding, between cards
+$Size4: 2.96vh; // 32px -- between blocks, panel padding
+$Size5: 5.93vh; // 64px -- tier-A edge margin, under a hero word
+
+// lines -- a hairline (UISTYLE 3.4), and the thicker accent line under an active tab and down a notice's left edge
+$Hairline: 0.1vh;
+$LineStrong: 0.3vh;
+
+// shape
+$RadiusCard: 0.93vh; // cards, panels, modals
+$RadiusControl: 0.56vh; // buttons, inputs, grid cells, chips, key caps
+$RadiusDot: 50%; // status dots only
+$BorderHairline: $Hairline solid $ColorBorder;
+
+// the one shadow (UISTYLE 3.4): under a floating tier-C pill
+$ShadowPill: 0 0.4vh 2vh rgba(0, 0, 0, 0.4);
+
+// motion -- the same numbers as Constants/Animations.js (UISTYLE 3.5), for the transitions written in SCSS
+$MotionFast: 0.12s; // hover, press, toggle
+$MotionBase: 0.2s; // show / hide, tab change, row select
+$MotionEase: cubic-bezier(0.2, 0, 0, 1);
+
+// the hold button (UISTYLE 6.6): what fills its key cap from the bottom while it is held
+$HoldFill: rgba(255, 255, 255, 0.35);
+
+// a scroll area's edge fade (UISTYLE 6.17): how far in an edge with more beyond it fades out
+$FadeLength: $Size4;
+
+// texture (UISTYLE 9): the rings pattern's and the grain's strength on tier A, the rings' in a tier-B card
+$PatternScreen: 0.04;
+$PatternCard: 0.02;
+$GrainScreen: 0.04;
+
+// mixins
+@mixin Eyebrow {
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow;
+    text-transform: uppercase;
+    color: $ColorTextFaint;
+}
+
+@mixin Display($Size) {
+    font-family: $FontDisplay;
+    font-size: $Size;
+    font-weight: $FontDisplayWeight;
+    letter-spacing: $TrackDisplay;
+    text-transform: uppercase;
+    line-height: $LineDisplay;
+}
+
+@mixin Outlined {
+    color: transparent;
+    -webkit-text-stroke: $Hairline $ColorText;
+}
+
+@mixin Selected {
+    border-color: var(--Accent);
+    background: var(--AccentSoft);
+}
+
+// A scroll area's mask (UISTYLE 6.17): the start and / or the end edge fades out over $FadeLength, along $Axis
+// ("y" down, "x" across); an edge with nothing beyond it stays sharp.
+@mixin EdgeFade($Axis, $IsStart, $IsEnd) {
+    $Direction: to bottom;
+    @if $Axis == "x" {
+        $Direction: to right;
+    }
+    $From: #000;
+    @if $IsStart {
+        $From: transparent;
+    }
+    $To: #000;
+    @if $IsEnd {
+        $To: transparent;
+    }
+    $Mask: linear-gradient($Direction, $From 0, #000 $FadeLength, #000 calc(100% - #{$FadeLength}), $To 100%);
+    -webkit-mask-image: $Mask;
+    mask-image: $Mask;
+}

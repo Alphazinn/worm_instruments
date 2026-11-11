@@ -1,0 +1,58 @@
+@use "../../Styles/tokens" as *;
+
+// A modal (UISTYLE 6.7): the scrim over the whole game, the opaque card centred on it.
+.Scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $ColorScrim;
+    pointer-events: auto;
+}
+
+.Modal {
+    display: flex;
+    flex-direction: column;
+    gap: $Size4;
+    width: $Size5 * 9;
+    max-height: $Size5 * 14;
+    padding: $Size4;
+    border: $BorderHairline;
+    border-radius: $RadiusCard;
+    background: $ColorSurface;
+    font-family: $FontBody;
+    color: $ColorText;
+}
+
+.Body {
+    display: flex;
+    flex-direction: column;
+    gap: $Size3;
+}
+
+// The footer: the primary full width, the way back under it as a key hint (the owner, 2026-11-01: no boxed Keep beside
+// the hold).
+.Footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: $Size2;
+}
+
+.Back {
+    align-self: flex-start;
+    padding: $Size1 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover span {
+        color: $ColorText;
+    }
+
+    :global([data-input="keyboard"]) &:focus-visible {
+        outline: $Hairline solid var(--Accent);
+    }
+}

@@ -1,0 +1,15 @@
+@use "../../Styles/tokens" as *;
+
+// The counter (UISTYLE 10.4): numbers are display font, one size larger than the text around them (UISTYLE 3.2).
+.Counter {
+    @include Display($TypeBody);
+    color: $ColorTextFaint;
+}
+
+.Current {
+    color: var(--Accent);
+}
+
+.Total {
+    color: $ColorTextFaint;
+}

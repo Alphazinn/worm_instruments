@@ -1,0 +1,62 @@
+@use "../../Styles/tokens" as *;
+
+// A scroll area (UISTYLE 6.17): it scrolls along one axis and fades the edges with more beyond them. Its own thin bar,
+// set here and not by the page: a modal is portalled to the body, out of the game page's container, and there the
+// browser drew its default bar with arrows (the owner's screenshot of the invoice, 2026-11-01).
+.Area {
+    min-width: 0;
+    min-height: 0;
+
+    &::-webkit-scrollbar {
+        width: $Size1;
+        height: $Size1;
+    }
+
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: $RadiusControl;
+        background: $ColorBorderStrong;
+    }
+}
+
+.Down {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.Across {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.YBefore {
+    @include EdgeFade("y", true, false);
+}
+
+.YAfter {
+    @include EdgeFade("y", false, true);
+}
+
+.YBeforeAfter {
+    @include EdgeFade("y", true, true);
+}
+
+.XBefore {
+    @include EdgeFade("x", true, false);
+}
+
+.XAfter {
+    @include EdgeFade("x", false, true);
+}
+
+.XBeforeAfter {
+    @include EdgeFade("x", true, true);
+}

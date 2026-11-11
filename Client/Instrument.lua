@@ -1,0 +1,1 @@
+-- The instrument in hand: hand props, hold and play clips, per-note motion (PLAN section 3). Written from Phase 3.

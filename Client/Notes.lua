@@ -1,0 +1,2 @@
+-- The player's outgoing note batches and the relayed batches of performers in earshot (PLAN section 3). Written from
+-- Phase 4.

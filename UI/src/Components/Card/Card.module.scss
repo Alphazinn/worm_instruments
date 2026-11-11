@@ -1,0 +1,32 @@
+@use "../../Styles/tokens" as *;
+
+// A card (UISTYLE 6.1): wider than tall, so its padding is Size3 across and Size2 + Size1 down.
+.Card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $Size3;
+    padding: calc(#{$Size2} + #{$Size1}) $Size3;
+    border: $BorderHairline;
+    border-radius: $RadiusCard;
+    background: $ColorSurface;
+}
+
+.Raised {
+    background: $ColorSurfaceRaised;
+}
+
+// The rings under a tier-B card at 2 %: App puts the pattern's URL on the root as --Rings.
+.Patterned::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--Rings) right center / cover no-repeat;
+    opacity: $PatternCard;
+    pointer-events: none;
+}
+
+.Patterned > * {
+    position: relative;
+}

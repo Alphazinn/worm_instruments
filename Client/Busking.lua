@@ -1,0 +1,1 @@
+-- Setting up: the case, the tip ring and window, the passers-by who listen (PLAN section 3). Written from Phase 5.

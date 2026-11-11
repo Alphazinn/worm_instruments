@@ -1,0 +1,50 @@
+@use "../../Styles/tokens" as *;
+
+// A setting row (UISTYLE 6.2): Size3 down, a hairline between rows, the control on the right.
+.Row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $Size4;
+    padding: $Size3 0;
+
+    & + & {
+        border-top: $BorderHairline;
+    }
+}
+
+.Text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: $Size1;
+    min-width: 0;
+}
+
+.Title {
+    display: inline-flex;
+    align-items: center;
+    gap: $Size2;
+    font-size: $TypeBody;
+    font-weight: 600;
+    color: $ColorText;
+}
+
+.Description {
+    font-size: $TypeMeta;
+    line-height: $LineDescription;
+    color: $ColorTextMuted;
+}
+
+.Control {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $Size2;
+    width: $Size5 * 4;
+}
+
+.Compact {
+    width: auto;
+}

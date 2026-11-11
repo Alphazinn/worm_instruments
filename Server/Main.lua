@@ -1,0 +1,1 @@
+-- Items, sessions, the performers' list and the restrictions (PLAN section 3). Written from Phase 3.

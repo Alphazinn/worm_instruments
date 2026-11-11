@@ -1,0 +1,37 @@
+@use "tokens" as *;
+
+// The base the page shares. Every colour and size is a token (UISTYLE PART 2); the accent's runtime properties are put
+// on the App's root by App.jsx from Config.UI.Accent, and these are their defaults.
+:root {
+    --Accent: #{$ColorAccentDefault};
+    --AccentDeep: #{$ColorAccentDeepDefault};
+    --AccentSoft: #{$ColorAccentSoftDefault};
+    --AccentGlow: #{$ColorAccentGlowDefault};
+    --Brand: #{$ColorBrandDefault};
+    --BrandHalf: #{$ColorBrandHalfDefault};
+}
+
+html,
+body,
+#root {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+    font-family: $FontBody;
+    font-size: $TypeBody;
+    line-height: $LineBody;
+    color: $ColorText;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+// A control pressed with the mouse never wears the browser's focus ring (CODESTYLE 3.20, Hooks/useInputModality).
+[data-input="mouse"] :focus-visible {
+    outline: none;
+}

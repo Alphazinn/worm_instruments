@@ -1,0 +1,53 @@
+@use "../../Styles/tokens" as *;
+
+// A key hint (UISTYLE 6.10): the caps, then the word.
+.Hint {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: $Size1;
+}
+
+.Cap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $Size3 + $Size1;
+    height: $Size3 + $Size1;
+    padding: 0 $Size1;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 700;
+    letter-spacing: $TrackEyebrow * 0.5;
+    text-transform: uppercase;
+    color: $ColorText;
+    transition: background $MotionFast $MotionEase, border-color $MotionFast $MotionEase;
+
+    svg {
+        width: $TypeMeta;
+        height: $TypeMeta;
+    }
+}
+
+.Primary {
+    box-shadow: inset 0 (-$Hairline) 0 var(--Accent);
+}
+
+.Pressed {
+    @include Selected;
+}
+
+// It names its font: a hint inside a <button> (the clickable [Esc] way back) would take the browser's button font.
+.Label {
+    margin-left: $Size1;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: $ColorTextFaint;
+}

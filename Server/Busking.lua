@@ -1,0 +1,1 @@
+-- Setting up, tips and the passers-by's tips (PLAN section 3). Written from Phase 5.

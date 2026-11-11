@@ -1,0 +1,2 @@
+-- The listener's position, distance, wall and interior, fed to the page for each performer in earshot (PLAN section
+-- 3). Written from Phase 4.

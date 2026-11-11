@@ -1,0 +1,99 @@
+@use "../../Styles/tokens" as *;
+
+// A text field (UISTYLE 6.5): the eyebrow and its hint over a raised box; focus is the accent's border, nothing else.
+.Field {
+    display: flex;
+    flex-direction: column;
+    gap: $Size1;
+    min-width: 0;
+}
+
+.Top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: $Size2;
+}
+
+.Label {
+    @include Eyebrow;
+}
+
+.Hint {
+    font-size: $TypeEyebrow;
+    color: $ColorTextFaint;
+    white-space: nowrap;
+}
+
+.Box {
+    display: flex;
+    align-items: center;
+    gap: $Size2;
+    min-height: $Size4 + $Size1;
+    padding: 0 $Size3;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+    transition: border-color $MotionFast $MotionEase;
+
+    &:focus-within {
+        border-color: var(--Accent);
+    }
+}
+
+// A deletion's name written out in full: the one selected style.
+.Written,
+.Written:focus-within {
+    @include Selected;
+}
+
+// The field and the ghost of the text to write, laid over each other in the same face and size.
+.Stack {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-width: 0;
+}
+
+.Ghost {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    font-family: $FontBody;
+    font-size: $TypeBody;
+    white-space: pre;
+    color: $ColorTextFaint;
+    pointer-events: none;
+}
+
+// The letters already typed keep their place in the ghost, unseen: the field draws them.
+.Typed {
+    color: transparent;
+}
+
+.Icon {
+    flex: none;
+    width: $TypeMeta;
+    height: $TypeMeta;
+    color: $ColorTextFaint;
+}
+
+.Input {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font-family: $FontBody;
+    font-size: $TypeBody;
+    color: $ColorText;
+    user-select: text;
+
+    &::placeholder {
+        color: $ColorTextFaint;
+    }
+}

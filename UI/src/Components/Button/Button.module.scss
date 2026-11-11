@@ -1,0 +1,113 @@
+@use "../../Styles/tokens" as *;
+
+// A button (UISTYLE 6.6): uppercase, tracked. Hover is the raised surface and the strong border (the primary's glow
+// strengthens instead); a press moves it down a hairline; disabled is faint. Nothing lifts, nothing scales.
+.Button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $Size3;
+    width: 100%;
+    min-height: $Size4 + $Size2;
+    padding: 0 $Size3;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: transparent;
+    font-family: $FontBody;
+    font-size: $TypeMeta;
+    font-weight: 600;
+    letter-spacing: $TrackButton;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: $ColorText;
+    cursor: pointer;
+    transition: background $MotionFast $MotionEase, border-color $MotionFast $MotionEase, box-shadow $MotionFast $MotionEase,
+        transform $MotionFast $MotionEase;
+
+    &:active:not(:disabled) {
+        transform: translateY($Hairline);
+    }
+
+    &:disabled {
+        color: $ColorTextFaint;
+        cursor: default;
+    }
+
+    :global([data-input="keyboard"]) &:focus-visible {
+        outline: $Hairline solid var(--Accent);
+        outline-offset: $Hairline;
+    }
+}
+
+.Label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// The key that presses it too: a cap of its own height with the word centred in it, as the hold button's and the key
+// hints' caps. It sets its own line and tracking: in a primary it took the display font's 0.95 line and the button's
+// wide tracking, and the word touched its outline (the owner's test, 2026-11-01).
+.Cap {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-width: $Size4;
+    height: $Size3 + $Size2;
+    padding: 0 $Size2;
+    border: $Hairline solid currentColor;
+    border-radius: $RadiusControl;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: $TrackEyebrow * 0.5;
+    opacity: 0.7;
+}
+
+.Primary {
+    @include Display($TypeBody);
+    letter-spacing: $TrackButton;
+    border-color: var(--Accent);
+    background: var(--Accent);
+    box-shadow: 0 0 $Size3 var(--AccentGlow);
+
+    &:hover:not(:disabled) {
+        box-shadow: 0 0 $Size4 var(--AccentGlow);
+    }
+
+    &:active:not(:disabled) {
+        border-color: var(--AccentDeep);
+        background: var(--AccentDeep);
+    }
+
+    &:disabled {
+        border-color: $ColorBorder;
+        background: $ColorSurfaceRaised;
+        box-shadow: none;
+    }
+}
+
+.Secondary {
+    &:hover:not(:disabled) {
+        border-color: $ColorBorderStrong;
+        background: $ColorSurfaceRaised;
+    }
+}
+
+.Ghost {
+    border-color: transparent;
+    color: $ColorTextMuted;
+
+    &:hover:not(:disabled) {
+        color: $ColorText;
+    }
+}
+
+.Small {
+    width: auto;
+    min-height: $Size4;
+    padding: 0 $Size3;
+    justify-content: center;
+}

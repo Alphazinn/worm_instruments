@@ -1,0 +1,2 @@
+-- Putting an instrument down: placement, placed instruments, moving parts, world labels (PLAN section 3). Written from
+-- Phase 11.

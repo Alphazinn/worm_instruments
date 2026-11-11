@@ -1,0 +1,49 @@
+@use "sass:color";
+@use "../../Styles/tokens" as *;
+
+// A chip (UISTYLE 6.8); a status's outline is its colour at half strength. It names its font: a chip a page puts in a
+// <button> (a kind picked by a click) took the browser's button font (the owner's test, 2026-11-01).
+.Chip {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: $Size1;
+    padding: $Size1 $Size2;
+    border: $Hairline solid $ColorBorderStrong;
+    border-radius: $RadiusControl;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: $ColorTextMuted;
+}
+
+.Dot {
+    width: $Size1 * 1.5;
+    height: $Size1 * 1.5;
+    border-radius: $RadiusDot;
+    background: currentColor;
+}
+
+.Filled {
+    border-color: var(--Accent);
+    background: var(--Accent);
+    color: $ColorText;
+}
+
+.Brand {
+    border-color: $ColorBrandHalf;
+    color: $ColorBrand;
+}
+
+.Warning {
+    border-color: color.change($ColorWarning, $alpha: 0.5);
+    color: $ColorWarning;
+}
+
+.Faint {
+    border-color: $ColorBorder;
+    color: $ColorTextFaint;
+}

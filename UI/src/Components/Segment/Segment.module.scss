@@ -1,0 +1,48 @@
+@use "../../Styles/tokens" as *;
+
+// A segment (UISTYLE 6.4): one raised track, the active option filled with the text colour.
+.Track {
+    display: flex;
+    gap: $Size1;
+    padding: $Size1;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+}
+
+.Option {
+    flex: 1;
+    min-height: $Size4;
+    padding: 0 $Size3;
+    border: $Hairline solid transparent;
+    border-radius: $RadiusControl;
+    background: transparent;
+    font-family: $FontBody;
+    font-size: $TypeMeta;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow * 0.5;
+    text-transform: uppercase;
+    color: $ColorTextMuted;
+    cursor: pointer;
+    transition: background $MotionFast $MotionEase, color $MotionFast $MotionEase;
+
+    &:hover {
+        color: $ColorText;
+    }
+
+    :global([data-input="keyboard"]) &:focus-visible {
+        outline: $Hairline solid var(--Accent);
+    }
+}
+
+.Active,
+.Active:hover {
+    background: $ColorText;
+    color: $ColorBackground;
+}
+
+.Focus .Active,
+.Focus .Active:hover {
+    @include Selected;
+    color: $ColorText;
+}

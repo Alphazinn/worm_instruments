@@ -1,0 +1,28 @@
+@use "sass:color";
+@use "../../Styles/tokens" as *;
+
+// The tier-A texture (UISTYLE 9): a radial darkening toward the edges in the background's own colour, the middle left
+// clear for the game; the grain over everything at $GrainScreen, blended so it only grains what is there.
+.Texture {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.Vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 45%, color.change($ColorBackground, $alpha: 0.55) 100%);
+}
+
+.Strong .Vignette {
+    background: radial-gradient(ellipse at center, transparent 35%, color.change($ColorBackground, $alpha: 0.8) 100%);
+}
+
+.Grain {
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat;
+    opacity: $GrainScreen;
+    mix-blend-mode: overlay;
+}

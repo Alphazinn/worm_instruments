@@ -1,0 +1,1 @@
+-- The stage camera and the first person camera of a placed instrument (PLAN section 3). Written from Phase 3.

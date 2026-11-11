@@ -1,0 +1,45 @@
+@use "../../Styles/tokens" as *;
+
+// UISTYLE 6.3: a track Size3 + Size4 wide and Size3 + Size2 tall (4.2 x 2.2 at 1080p), the knob Size3 square.
+.Track {
+    position: relative;
+    flex: none;
+    width: $Size3 + $Size4;
+    height: $Size3 + $Size2;
+    padding: 0;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+    cursor: pointer;
+    transition:
+        background $MotionFast $MotionEase,
+        border-color $MotionFast $MotionEase;
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.5;
+    }
+}
+
+.Knob {
+    position: absolute;
+    top: 50%;
+    left: $Size1;
+    width: $Size3;
+    height: $Size3;
+    border-radius: $RadiusControl;
+    background: $ColorTextFaint;
+    transform: translateY(-50%);
+    transition:
+        left $MotionFast $MotionEase,
+        background $MotionFast $MotionEase;
+}
+
+.On {
+    @include Selected;
+
+    .Knob {
+        left: calc(100% - #{$Size3} - #{$Size1});
+        background: $ColorBrand;
+    }
+}

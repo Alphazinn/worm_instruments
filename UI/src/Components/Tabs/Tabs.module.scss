@@ -1,0 +1,64 @@
+@use "../../Styles/tokens" as *;
+
+// Section tabs (UISTYLE 6.12, tier B): outlined, the active one's border the accent.
+.Tabs {
+    display: flex;
+    gap: $Size1;
+}
+
+.Tab {
+    padding: $Size1 $Size3;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: transparent;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow;
+    text-transform: uppercase;
+    color: $ColorTextFaint;
+    cursor: pointer;
+    transition: color $MotionFast $MotionEase, border-color $MotionFast $MotionEase;
+
+    &:hover {
+        border-color: $ColorBorderStrong;
+        color: $ColorTextMuted;
+    }
+
+    :global([data-input="keyboard"]) &:focus-visible {
+        outline: $Hairline solid var(--Accent);
+    }
+}
+
+.Active,
+.Active:hover {
+    border-color: var(--Accent);
+    color: $ColorText;
+}
+
+// A tier-A screen's tabs: display type at the title size, the inactive ones outlined (UISTYLE 3.2's
+// fill / outline pair), the active one filled over the accent's thick line.
+.Screen {
+    gap: $Size4;
+
+    .Tab {
+        padding: 0 0 $Size1;
+        border: 0;
+        border-bottom: $LineStrong solid transparent;
+        border-radius: 0;
+        @include Display($TypeTitle);
+        @include Outlined;
+
+        &:hover {
+            color: transparent;
+            -webkit-text-stroke-color: $ColorTextMuted;
+        }
+    }
+
+    .Active,
+    .Active:hover {
+        border-bottom-color: var(--Accent);
+        color: $ColorText;
+        -webkit-text-stroke: 0;
+    }
+}

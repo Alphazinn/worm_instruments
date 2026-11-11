@@ -1,0 +1,1 @@
+-- The admin panel and the zones' early refusal (PLAN section 3). Written from Phase 14.

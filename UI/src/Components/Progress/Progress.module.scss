@@ -1,0 +1,19 @@
+@use "../../Styles/tokens" as *;
+
+// A progress bar (UISTYLE 6.13): no stripes, no shimmer.
+.Track {
+    height: $Size1;
+    overflow: hidden;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+}
+
+.Fill {
+    height: 100%;
+    border-radius: $RadiusControl;
+    background: var(--Accent);
+}
+
+.Action {
+    background: var(--AccentDeep);
+}

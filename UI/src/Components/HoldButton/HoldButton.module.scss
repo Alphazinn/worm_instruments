@@ -1,0 +1,116 @@
+@use "../../Styles/tokens" as *;
+
+// The hold button (UISTYLE 6.6): the accent's fill and glow like the primary; while held a line runs along its bottom
+// edge and the key cap fills from the bottom, both linearly over the hold's time. The label never moves.
+.Hold {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $Size3;
+    width: 100%;
+    min-height: $Size5;
+    padding: 0 $Size3;
+    overflow: hidden;
+    border: $Hairline solid var(--Accent);
+    border-radius: $RadiusControl;
+    background: var(--Accent);
+    box-shadow: 0 0 $Size3 var(--AccentGlow);
+    color: $ColorText;
+    cursor: pointer;
+    touch-action: none;
+    transition: background $MotionFast $MotionEase, box-shadow $MotionFast $MotionEase;
+
+    &:hover {
+        box-shadow: 0 0 $Size4 var(--AccentGlow);
+    }
+
+    :global([data-input="keyboard"]) &:focus-visible {
+        outline: $Hairline solid var(--Accent);
+        outline-offset: $Hairline;
+    }
+}
+
+.Holding {
+    border-color: var(--AccentDeep);
+    background: var(--AccentDeep);
+}
+
+.Label {
+    @include Display($TypeTitle);
+    letter-spacing: $TrackButton;
+    white-space: nowrap;
+}
+
+.Hint {
+    display: inline-flex;
+    align-items: center;
+    gap: $Size2;
+    font-size: $TypeEyebrow;
+    font-weight: 600;
+    letter-spacing: $TrackEyebrow;
+    text-transform: uppercase;
+}
+
+// The key's cap: its fill rises from the bottom while held.
+.Cap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $Size4;
+    height: $Size3 + $Size2;
+    padding: 0 $Size1;
+    overflow: hidden;
+    border: $Hairline solid currentColor;
+    border-radius: $RadiusControl;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 700;
+}
+
+.CapFill {
+    position: absolute;
+    inset: 0;
+    background: $HoldFill;
+    transform: scaleY(0);
+    transform-origin: center bottom;
+    transition-property: transform;
+    transition-timing-function: linear;
+}
+
+.Face {
+    position: relative;
+}
+
+// The line along the bottom edge.
+.Line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: $LineStrong;
+    background: $ColorText;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition-property: transform;
+    transition-timing-function: linear;
+    pointer-events: none;
+}
+
+.Holding .CapFill {
+    transform: scaleY(1);
+}
+
+.Holding .Line {
+    transform: scaleX(1);
+}
+
+.Disabled,
+.Disabled:hover {
+    border-color: $ColorBorder;
+    background: $ColorSurfaceRaised;
+    box-shadow: none;
+    color: $ColorTextFaint;
+    cursor: default;
+}

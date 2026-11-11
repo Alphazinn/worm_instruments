@@ -1,0 +1,1 @@
+-- Note batch validation and the relay to players in earshot (PLAN section 3). Written from Phase 4.
