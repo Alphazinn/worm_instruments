@@ -1,6 +1,6 @@
 # PLAN — worm_instruments
 
-> **Status:** Phase 0 of 15 — not started. *(The implementing session updates this line after every committed phase: "Phase 4 of 15 done (a1b2c3d); next: Phase 5".)*
+> **Status:** Phase 1 of 15 done (95f2a96; assets 8a98c8e); next: Phase 2. *(The implementing session updates this line after every committed phase: "Phase 4 of 15 done (a1b2c3d); next: Phase 5".)*
 
 > **Rules for the implementing session:**
 > - Read `CODESTYLE.md` completely before writing any code — PARTS 1–5; every rule applies to every phase. Talk to the owner in Turkish, short (CODESTYLE 5.1). Read `UISTYLE.md` completely too; every screen is built from its hierarchy sheet in section 12, wireframe first, and passes the slop audit (UISTYLE 12) before its phase is reported.
