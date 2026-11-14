@@ -33,3 +33,37 @@ $StaffHeight: calc(#{$StaffGap} * #{$StaffLines - 1});
     background-position: left center;
     background-size: 100% calc(#{$StaffHeight} + 0.1vh);
 }
+
+// The staff as a rule between two parts of a card: the five lines alone, on the card's own surface, a staff's height
+// tall. Where a plain card would have one hairline, this card has the staff.
+@mixin StaffRule {
+    height: calc(#{$StaffHeight} + 0.1vh);
+    background-image: repeating-linear-gradient(
+        to bottom,
+        $ColorBorder 0,
+        $ColorBorder 0.1vh,
+        transparent 0.1vh,
+        transparent $StaffGap
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+// The hero card's chamfer (UISTYLE 10.2): its top-right corner cut by $Size3, the cut edge a hairline in the deep
+// accent. The same shape as the Lobby room card of the scaffold's source script.
+@mixin Chamfer {
+    clip-path: polygon(0 0, calc(100% - #{$Size3}) 0, 100% $Size3, 100% 100%, 0 100%);
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: calc(100% - #{$Size3});
+        width: $Size3 * 1.4142;
+        height: $Hairline;
+        background: var(--AccentDeep);
+        transform: rotate(45deg);
+        transform-origin: left top;
+        pointer-events: none;
+    }
+}

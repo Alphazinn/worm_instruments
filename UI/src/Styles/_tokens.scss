@@ -72,6 +72,11 @@ $BorderHairline: $Hairline solid $ColorBorder;
 // the one shadow (UISTYLE 3.4): under a floating tier-C pill
 $ShadowPill: 0 0.4vh 2vh rgba(0, 0, 0, 0.4);
 
+// A word standing on the game with no surface under it (a hero word, hints in their light form, UISTYLE 4.1): a tight
+// dark shadow and a wide soft one, so it reads over the road and the sky alike. They lift nothing. The same value as
+// worm_skateboard's shared tokens.
+$ShadowBareText: 0 0.2vh 0.6vh rgba(0, 0, 0, 0.9), 0 0 1.4vh rgba(0, 0, 0, 0.6);
+
 // motion -- the same numbers as Constants/Animations.js (UISTYLE 3.5), for the transitions written in SCSS
 $MotionFast: 0.12s; // hover, press, toggle
 $MotionBase: 0.2s; // show / hide, tab change, row select

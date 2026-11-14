@@ -67,6 +67,34 @@ export const WipeVariants = {
     Open: { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", transition: { duration: Slow, ease: Ease } },
 };
 
+/**
+ * The staff ribbon (PLAN section 12's concept card): a played note is written at the ribbon's right end and travels
+ * left at a constant speed until it leaves. This is the notes' own motion, not a surface's entrance, so it is linear
+ * and longer than Slow: RibbonSeconds is how long a note stays in sight, which sets how much of the playing is shown.
+ */
+export const RibbonSeconds = 6;
+
+/** The share of its way a ribbon note takes to be written in (about Fast at RibbonSeconds). */
+const RibbonInkShare = 0.02;
+
+/** The share of its way at which a ribbon note starts to fade before the ribbon's left end. */
+const RibbonFadeShare = 0.9;
+
+/** A note on the ribbon: written in by opacity at the right end (ink), then carried to the left end and out. */
+export const RibbonVariants = {
+    Written: { left: "100%", opacity: 0 },
+    // Each value has its own timing: keyframe times shared with the two-point travel left the fade stuck at its first
+    // keyframe (measured in the page, 2026-11-14).
+    Gone: {
+        left: "0%",
+        opacity: [0, 1, 1, 0],
+        transition: {
+            left: { duration: RibbonSeconds, ease: "linear" },
+            opacity: { duration: RibbonSeconds, ease: "linear", times: [0, RibbonInkShare, RibbonFadeShare, 1] },
+        },
+    },
+};
+
 /** A scrim or a screen's own layer: opacity only. */
 export const FadeVariants = {
     Closed: { opacity: 0, transition: { duration: Base * ExitShare, ease: Ease } },

@@ -1114,7 +1114,40 @@ Fifteen phases. Each instrument phase follows the same shape: props (reference r
 - Use the item sitting in a car. *(Refused with its reason.)*
 - Switch to the female freemode ped and take it out once.
 **Commit:** `feat(play): add the play screen and the harmonica`
-**As applied:**
+**As applied:** 2026-11-14, in four rounds the owner agreed before writing (loop + wireframe + sound; the prop; the clips and grips; the styling). Agreed at the measurement:
+- VCSL's chromatic Hohner Super 64 rather than a diatonic (the keys play every semitone). VCSL names its files an octave low: measured from the odd partials, each note is its name + 12, C3 to D7, and every root came within 7 cents. Its background is 54 dB under the notes. Its roots are C, E and G, so `checksound` allows a gap of five for it alone.
+- All 18 items added to the test server's `qb-core/shared/items.lua` (the owner's file, outside both repos).
+- `Bridge.Player.IsCuffed` added (worm_lib has no cuff export): the game's cuffed flag, and qb/qbx `metadata.ishandcuffed`. Down and cuffed are the client's to refuse; the server's gate (`Utils.Session.CanPlay`) refuses a switched-off or unbuilt instrument and a vehicle.
+- The items are registered again when worm_lib restarts, as worm_mechanic does.
+- The Phase 2 command was already gone (SK12).
+- The keys are a tracker layout: the lower octave on Z/S, the upper on Q/digits. Esc closes the screen, ↑↓ shift the octave, ←→ change the tempo, ` toggles the metronome; letters come from the keyboard's own layout map.
+
+Found while writing:
+- `PutAway` from the client is not rate limited: it can only end an open session, once.
+- A begin that streams the prop in carries a ticket, so a session ended meanwhile is not opened.
+- `KeyMapping_Play` (the binding's line in the game's settings) is a key section 5 lacked: 217 in all.
+- The play dock stops at a 16:9 width, centred, so the keys keep their shape on ultrawide (Playwright at 3440×1440).
+- `$ShadowBareText` joined `_tokens.scss` with worm_skateboard's value, for the hero word and the mark standing on the game.
+- The metronome is the page's own oscillator click (`Utils/Metronome.js`).
+- The prop was modelled by a Fable sub-agent (`Source/Harmonica/make_harmonica.py`, 998 triangles, no brand). It was converted with FiveM-Prop-Converter from a file of answers, fed by a redirect from Git Bash; PowerShell's pipe lost lines. The textures are embedded in the `.ydr`.
+
+The owner's changes in test:
+- The hint reads "Play".
+- The first clips held the harmonica at the mouth with both flat hands, and read as praying. Now:
+  - out of the playing, it is held in the right hand before the chest (`Grip`, the hold clip, the free arm relaxed);
+  - while played, it rides on the head at the lips (`MouthGrip` on SKEL_Head, after worm_restaurant's gum), and the game's arm IK puts the hands on its two ends every frame (`HandHolds`, 5 cm below them so the fingers close over it).
+- The pose follows the screen: K opens it playing at once, Esc drops it to the hold at once.
+- Both grips were set by the owner with a TEMPORARY numpad tuner; CapsLock turned it, because Shift with NumLock on makes the numpad arrows. The tuner was deleted, and SK12 keeps its name gone.
+
+Proved:
+- `checkplay` PL1–PL7 by `injectplay`.
+- The changed `checksound` SD2, SD3 and SD7.
+- SK12's new case; SK5 at 25 keys; SK8 red on purpose.
+- The guard green; its rows for Framer's keys, the Bridge's two closures and the IK loop's `Wait(0)` were added.
+- The slop audit was walked in Playwright at 1080p and 3440×1440. Two choices, as decided:
+  - the hero word is the card's heading;
+  - the ribbon's notes travel for 6 s, the concept card's constant speed.
+- The owner tested the whole loop: vehicle refusal, Esc / K, put away, the female freemode ped. The logs were clean, the set ready in 110–125 ms.
 
 ### Phase 4 — Others hear it
 **Goal:** everyone in earshot hears a performer from where they stand — quieter with distance, muffled behind a wall, with an echo indoors — sees note marks rise, and controls their own sound.

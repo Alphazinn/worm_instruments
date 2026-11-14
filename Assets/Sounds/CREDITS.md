@@ -12,6 +12,8 @@ cents is stored per sample, the audio itself is not re-pitched), levelled and en
   anyway).
 - **VSCO 2 CE, Solo Violin, Arco Vib (CC0)** — the violin. Versilian Studios Chamber Orchestra 2 Community Edition,
   https://github.com/sgossner/VSCO-2-CE — Creative Commons Zero 1.0.
+- **VCSL, Harmonica, Hohner Super 64 (CC0)** — the harmonica. Versilian Community Sample Library by Versilian Studios,
+  https://github.com/sgossner/VCSL — Creative Commons Zero 1.0.
 
 ## Synthesised
 

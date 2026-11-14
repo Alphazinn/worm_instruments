@@ -1,0 +1,55 @@
+@use "../../Styles/tokens" as *;
+
+// A stepper: the eyebrow over a row of ‹ value ›.
+.Stepper {
+    display: flex;
+    flex-direction: column;
+    gap: $Size1;
+}
+
+.Label {
+    @include Eyebrow;
+}
+
+.Row {
+    display: inline-flex;
+    align-items: center;
+    gap: $Size2;
+}
+
+.Step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $Size4;
+    height: $Size4;
+    padding: 0;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+    color: $ColorTextMuted;
+    cursor: pointer;
+    transition: background $MotionFast $MotionEase, border-color $MotionFast $MotionEase;
+
+    &:hover:not(:disabled) {
+        border-color: $ColorBorderStrong;
+        color: $ColorText;
+    }
+
+    &:disabled {
+        color: $ColorTextFaint;
+        cursor: default;
+    }
+}
+
+.Icon {
+    width: $TypeMeta;
+    height: $TypeMeta;
+}
+
+.Value {
+    @include Display($TypeTitle);
+    min-width: $Size5;
+    text-align: center;
+    color: $ColorText;
+}

@@ -1,0 +1,75 @@
+@use "../../Styles/tokens" as *;
+
+// The keyed surface: sections side by side, each a short keyboard of white keys with black keys over them.
+.Bed {
+    display: flex;
+    gap: $Size3;
+    width: 100%;
+    transition: opacity $MotionBase $MotionEase;
+}
+
+// While the sound is still loading the keys are there to read but not yet to play.
+.Dimmed {
+    opacity: 0.4;
+}
+
+.Section {
+    position: relative;
+    flex-basis: 0;
+}
+
+// White keys touch, parted by their hairlines, so a black key's place is a plain share of the section's width.
+.Whites {
+    display: flex;
+}
+
+// Every key: its letter on top, its note's name under it, both at the key's foot like a piano's printed keys.
+%Key {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: $Size1;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    transition: background $MotionFast $MotionEase, border-color $MotionFast $MotionEase;
+}
+
+.White {
+    @extend %Key;
+    flex: 1 1 0;
+    height: $Size5 + $Size4;
+    padding-bottom: $Size2;
+    background: $ColorSurfaceRaised;
+}
+
+.Black {
+    @extend %Key;
+    position: absolute;
+    top: 0;
+    height: $Size5;
+    padding-bottom: $Size1;
+    background: $ColorBackground;
+    z-index: 1;
+}
+
+.Pressed {
+    @include Selected;
+}
+
+.Silent {
+    opacity: 0.3;
+}
+
+.Letter {
+    font-family: $FontBody;
+    font-size: $TypeBody;
+    font-weight: 700;
+    line-height: 1;
+    color: $ColorText;
+}
+
+.Note {
+    @include Eyebrow;
+    letter-spacing: 0;
+}

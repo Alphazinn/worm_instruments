@@ -1,0 +1,144 @@
+@use "../../Styles/tokens" as *;
+@use "../../Styles/motif" as *;
+
+// The play screen (tier A; PLAN section 12, "Screen — Play"). Always mounted (CODESTYLE 3.6): hidden by opacity, and it
+// takes no pointer until it shows (CODESTYLE 3.20). The game is the hero: the instrument's name and its card stand in
+// the top-left corner, the surface on the bottom edge, the centre and the top-right stay open for the character.
+.Play {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $MotionBase $MotionEase;
+
+    &.Visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+// Top-left: the hero word with its handwritten mark, and the card under it. It slides in from the left edge.
+.Corner {
+    position: absolute;
+    top: $Size5;
+    left: $Size5;
+    display: flex;
+    flex-direction: column;
+    gap: $Size3;
+    width: $Size5 * 6;
+}
+
+.Title {
+    display: flex;
+    align-items: flex-end;
+    gap: $Size2;
+}
+
+// The one hero word (UISTYLE 4.1): bare on the game, so it carries the bare-text shadow to read over sky and road.
+.Hero {
+    @include Display($TypeHero);
+    margin: 0;
+    color: $ColorText;
+    text-shadow: $ShadowBareText;
+    white-space: nowrap;
+}
+
+// The handwritten mark beside the hero word, on its baseline (UISTYLE 10.3).
+.Mark {
+    margin-bottom: $Size3;
+    text-shadow: $ShadowBareText;
+}
+
+// The card: its top-right corner chamfered (the screen's hero card, UISTYLE 10.2), the staff run through it as the rule
+// between what it is and what can be set (the motif, PLAN section 12).
+.Info {
+    @include Chamfer;
+    gap: $Size3;
+}
+
+.Lead {
+    display: flex;
+    flex-direction: column;
+    gap: $Size1;
+}
+
+// The card's eyebrow takes the accent: the play screen's focus block (UISTYLE 5).
+.Eyebrow {
+    @include Eyebrow;
+}
+
+.Lead .Eyebrow {
+    color: var(--Accent);
+}
+
+.How {
+    margin: 0;
+    font-size: $TypeMeta;
+    line-height: $LineDescription;
+    color: $ColorTextMuted;
+}
+
+.Staff {
+    @include StaffRule;
+}
+
+.Controls {
+    display: flex;
+    flex-direction: column;
+    gap: $Size3;
+}
+
+.Metronome {
+    display: flex;
+    flex-direction: column;
+    gap: $Size1;
+}
+
+.MetronomeRow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: $Size3;
+}
+
+.Note {
+    margin: 0;
+    font-size: $TypeMeta;
+    line-height: $LineDescription;
+    color: $ColorTextMuted;
+}
+
+.Loading {
+    display: flex;
+    flex-direction: column;
+    gap: $Size2;
+}
+
+// The bottom edge: where the surface stands. On a screen wider than 16:9 it stops at a 16:9 screen's width, centred,
+// so its keys keep their shape (CODESTYLE 3.18): across a 21:9 screen they were half again as wide. The place is its
+// own box so the surface inside it can rise in (Framer Motion owns the surface's transform).
+.DockPlace {
+    position: absolute;
+    left: 50%;
+    bottom: $Size5;
+    transform: translateX(-50%);
+    width: calc(100% - #{$Size5 * 2});
+    max-width: $Size5 * 28;
+}
+
+// The surface: the hints at its top-left, the staff ribbon, the keys.
+.Dock {
+    display: flex;
+    flex-direction: column;
+    gap: $Size2;
+    padding: $Size3;
+    border: $BorderHairline;
+    border-radius: $RadiusCard;
+    background: $ColorSurface;
+}
+
+.Hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $Size3;
+}

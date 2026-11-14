@@ -540,6 +540,109 @@
                     "LoopEnd": 0.0
                 }
             ]
+        },
+        "Harmonica": {
+            "Method": "Recorded",
+            "Range": [
+                48,
+                98
+            ],
+            "Release": 0.12,
+            "Articulation": "Breath",
+            "Source": "VCSL, Harmonica, Hohner Super 64 (CC0)",
+            "Samples": [
+                {
+                    "File": "Harmonica/48.ogg",
+                    "Root": 48,
+                    "Tune": 2.0,
+                    "LoopStart": 0.75007,
+                    "LoopEnd": 1.49238
+                },
+                {
+                    "File": "Harmonica/52.ogg",
+                    "Root": 52,
+                    "Tune": 6.0,
+                    "LoopStart": 0.55032,
+                    "LoopEnd": 1.35347
+                },
+                {
+                    "File": "Harmonica/55.ogg",
+                    "Root": 55,
+                    "Tune": 6.5,
+                    "LoopStart": 0.65009,
+                    "LoopEnd": 4.09664
+                },
+                {
+                    "File": "Harmonica/60.ogg",
+                    "Root": 60,
+                    "Tune": -0.4,
+                    "LoopStart": 0.75063,
+                    "LoopEnd": 1.45753
+                },
+                {
+                    "File": "Harmonica/64.ogg",
+                    "Root": 64,
+                    "Tune": 0.1,
+                    "LoopStart": 0.55011,
+                    "LoopEnd": 3.8605
+                },
+                {
+                    "File": "Harmonica/67.ogg",
+                    "Root": 67,
+                    "Tune": 0.6,
+                    "LoopStart": 0.55011,
+                    "LoopEnd": 4.5383
+                },
+                {
+                    "File": "Harmonica/72.ogg",
+                    "Root": 72,
+                    "Tune": 0.6,
+                    "LoopStart": 0.6502,
+                    "LoopEnd": 1.51816
+                },
+                {
+                    "File": "Harmonica/76.ogg",
+                    "Root": 76,
+                    "Tune": 1.3,
+                    "LoopStart": 0.7502,
+                    "LoopEnd": 4.49011
+                },
+                {
+                    "File": "Harmonica/79.ogg",
+                    "Root": 79,
+                    "Tune": -0.6,
+                    "LoopStart": 0.55016,
+                    "LoopEnd": 1.43642
+                },
+                {
+                    "File": "Harmonica/84.ogg",
+                    "Root": 84,
+                    "Tune": 0.7,
+                    "LoopStart": 0.75018,
+                    "LoopEnd": 1.52921
+                },
+                {
+                    "File": "Harmonica/88.ogg",
+                    "Root": 88,
+                    "Tune": -0.9,
+                    "LoopStart": 0.55025,
+                    "LoopEnd": 1.25288
+                },
+                {
+                    "File": "Harmonica/91.ogg",
+                    "Root": 91,
+                    "Tune": 0.2,
+                    "LoopStart": 0.65025,
+                    "LoopEnd": 1.35438
+                },
+                {
+                    "File": "Harmonica/96.ogg",
+                    "Root": 96,
+                    "Tune": 0.8,
+                    "LoopStart": 0.45005,
+                    "LoopEnd": 3.99444
+                }
+            ]
         }
     }
 }

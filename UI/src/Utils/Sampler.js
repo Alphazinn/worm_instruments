@@ -55,12 +55,18 @@ const LoadManifest = () => {
  * Reads and decodes one instrument's set, once; later calls get the same set. Each instrument has one set, recorded or
  * synthesised as the owner chose by ear (Phase 2). A set that is missing, or any of whose files fails, answers null and
  * is not kept, so the next try reads it afresh.
+ * OnProgress hears the share of samples decoded (the play screen's "tuning up" bar); a set already loaded or loading
+ * answers 1 at once.
  * @param {string} Instrument - the Config.Instruments name
+ * @param {(Share: number) => void} [OnProgress]
  * @returns {Promise<object|null>} { Range, Release, Samples: [{ Root, Tune, LoopStart, LoopEnd, Buffer }] }
  */
-export const LoadSet = (Instrument) => {
+export const LoadSet = (Instrument, OnProgress = () => {}) => {
     const Key = Instrument;
-    if (Sets.has(Key)) return Sets.get(Key);
+    if (Sets.has(Key)) {
+        OnProgress(1);
+        return Sets.get(Key);
+    }
 
     const Loading = (async () => {
         const Manifest = await LoadManifest();
@@ -68,12 +74,15 @@ export const LoadSet = (Instrument) => {
         if (!Entry || !Array.isArray(Entry.Samples) || Entry.Samples.length === 0) return null;
 
         const Audio = GetContext();
+        let Decoded = 0;
         const Samples = await Promise.all(
             Entry.Samples.map(async (Sample) => {
                 const Bytes = await FetchAsset(GetSample(Sample.File), "Bytes");
                 if (!Bytes) return null;
                 try {
                     const Buffer = await Audio.decodeAudioData(Bytes);
+                    Decoded += 1;
+                    OnProgress(Decoded / Entry.Samples.length);
                     return { Root: Sample.Root, Tune: Sample.Tune, LoopStart: Sample.LoopStart, LoopEnd: Sample.LoopEnd, Buffer };
                 } catch (Error) {
                     console.error(`[Sampler] ${Sample.File} would not decode:`, Error);

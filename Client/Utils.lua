@@ -7,6 +7,7 @@
     Utils = {
         General = {},
         Player = {},
+        Hint = {},
     }
 
 -- Globals
@@ -137,5 +138,26 @@
         end
 
     -- Player
+
+    -- Hint
+
+        ---@param ID string  The hint's own id, so it can be replaced or removed
+        ---@param Key string  The key cap's face
+        ---@param Label string  A finished, localised word
+        ---@return nil
+        -- Shows a key hint on worm_lib's strip (PLAN section 2: in-world key hints are worm_lib's), on foot only.
+        Utils.Hint.Add = function(ID, Key, Label)
+            -- worm_lib's short form: id, key, label, icon (none), when.
+            exports.worm_lib:addHint(ID, Key, Label, nil, "foot")
+        end
+
+        ---@param ID string
+        ---@return nil
+        -- Takes a key hint off worm_lib's strip; worm_lib also takes every hint of this resource off when it stops.
+        Utils.Hint.Remove = function(ID)
+            exports.worm_lib:removeHint(ID)
+        end
+
+    -- Hint
 
 -- Functions

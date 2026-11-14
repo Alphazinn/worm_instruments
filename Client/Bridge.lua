@@ -57,7 +57,7 @@
         end
 
         ---@return nil
-        -- Populates Bridge.Player.IsDown: whether the local player is down, the framework's own way. A last stand is
+        -- Populates Bridge.Player.IsDown and IsCuffed. IsDown: whether the local player is down, the framework's own way. A last stand is
         -- not a native death on every framework (PLAN section 9), and worm_lib has no export for it, so the answer is
         -- read from worm_lib's getPlayerData per the framework getFrameworkType names. worm_lib finds its framework
         -- lazily, so the name is asked on each call until it answers, then kept.
@@ -81,6 +81,28 @@
                 end
 
                 return IsEntityDead(PlayerPedId()) and true or false
+            end
+
+            ---@return boolean # True while the local player's hands are cuffed.
+            -- worm_lib has no export for it either. The game's own cuffed flag (SetEnableHandcuffs, read by
+            -- IsPedCuffed) is what cuffing scripts set on any framework; QBCore and QBox also keep it in the
+            -- character's metadata, read in case a script sets only that. Read twice a second by the session check.
+            Bridge.Player.IsCuffed = function()
+                if IsPedCuffed(PlayerPedId()) then return true end
+
+                if FrameworkType == nil then
+                    FrameworkType = exports.worm_lib:getFrameworkType()
+                end
+
+                if FrameworkType == "qb" or FrameworkType == "qbx" then
+                    local PlayerData <const> = exports.worm_lib:getPlayerData()
+                    local Metadata <const> = PlayerData and PlayerData.metadata
+                    if type(Metadata) ~= "table" then return false end
+
+                    return Metadata.ishandcuffed == true
+                end
+
+                return false
             end
         end
 

@@ -22,6 +22,10 @@ local Technical <const> = {
         -- Ms between the checks that end a session: dead, cuffed, in a vehicle, item gone. Twice a second is
         -- quick enough that nobody plays a bar from inside a car, and costs nothing.
         SessionCheckInterval = 500,
+        ---@type number
+        -- Ms between the server's looks at whether each performer still holds their instrument's item. An item
+        -- dropped, sold or given away is not urgent, and every look is an inventory call per performer.
+        ItemCheckInterval = 2000,
     },
 
     UI = {
@@ -116,6 +120,21 @@ local Technical <const> = {
             Height = 0.4,
             ---@type number  Degrees turned per pixel of a right-button drag.
             Sensitivity = 0.25,
+            ---@type number  Degrees round from the character's face the camera starts at: a little to the side, so the
+            -- instrument at the mouth is seen and not hidden behind the hands. Tuned in Phase 3.
+            StartYaw = 20.0,
+            ---@type number  Degrees above the look point the camera starts at.
+            Pitch = 8.0,
+            ---@type number  Lowest a drag takes it: a little under the look point, never into the ground.
+            PitchMin = -10.0,
+            ---@type number  Highest a drag takes it: well above, never straight down on the head.
+            PitchMax = 55.0,
+            ---@type number  Metres one notch of the wheel moves it.
+            ZoomStep = 0.25,
+            ---@type number  Field of view, degrees: a little narrower than the game's, so the character fills the frame.
+            Fov = 45.0,
+            ---@type number  Ms the game takes to blend into the stage camera and back out of it.
+            EaseMs = 400,
         },
         -- FirstPerson = { Piano = { Offset, Pitch, Fov }, ... } -- tuned in Phases 11-13, one entry per placed instrument.
     },
@@ -170,7 +189,53 @@ local Technical <const> = {
     --   Seat       { Offset, Heading } for a placed instrument or the cello's stool -- tuned
     --   Parts      for a placed instrument: every moving part's model and local offset, written by the prop's
     --              modelling script (never by hand)
-    Instruments = {},
+    --   Polyphony  most notes the page lets sound at once from this instrument
+    -- An instrument with no Family is not built yet: its item is not registered, and the server refuses it.
+    Instruments = {
+        Harmonica = {
+            ---@type string
+            -- The page's control family (UI/src/Utils/KeyMaps.js). Wind: a key blows its note for as long as it is
+            -- held; the harmonica, unlike the other winds, lets neighbouring keys sound together as a chord.
+            Family = "Wind",
+            ---@type boolean
+            IsPlaced = false,
+            ---@type number[]
+            -- MIDI notes, C3 to D7: the Hohner Super 64's own range, and its sample set's (Assets/Sounds/Manifest.json,
+            -- built by the assets' Source/Sounds/build_sounds.py). A check holds the two equal.
+            Range = { 48, 98 },
+            ---@type number
+            -- A mouth covers about four holes of a harmonica: a fifth note at once releases the oldest.
+            Polyphony = 4,
+            ---@type string
+            -- The hand prop, modelled for this script (worm_instruments_assets' Source/Harmonica/make_harmonica.py).
+            Model = "worm_instr_harmonica",
+            -- Where the prop sits while it is held, not played: the right hand's bone (SKEL_R_Hand, tag 57005, read
+            -- from the game's own skeleton by Anim-Forge), then metres and degrees in the bone's frame. Set by the
+            -- owner in game with a temporary key tuner on the hold clip (Phase 3, 2026-11-14).
+            Grip = { Bone = 57005, Offset = vector3(0.080, 0.000, -0.025), Rotation = vector3(20.0, 0.0, -108.0) },
+            -- Where it sits while it is played: on the head (SKEL_Head, 31086, worm_restaurant's gum measured it), at
+            -- the lips, so it follows the head wherever the hands are (the owner, 2026-11-14: the restaurant's gum
+            -- rides on the head the same way). Set by the owner in game with the same tuner on the play clip.
+            MouthGrip = { Bone = 31086, Offset = vector3(-0.020, 0.140, 0.015), Rotation = vector3(-4.0, 90.0, 6.0) },
+            -- The two points of the prop the hands reach for while it is played (the game's arm IK, Client/
+            -- Instrument.lua), in the prop's own frame: just past each end along its length (make_harmonica.py's
+            -- Parts.json: the body ends at 9.5 cm each side), so the palm closes round the end. Which hand takes which
+            -- end is worked out every frame from the ped's own frame, so the prop's turn on the head does not matter.
+            HandHolds = { vector3(-0.105, 0.010, 0.0), vector3(0.105, 0.010, 0.0) },
+            ---@type number
+            -- Metres straight down (the world's) from each hold that the hand's bone is sent to: the IK target is the
+            -- wrist, and a wrist at the end held the fingers up over the eyes (the owner's test, 2026-11-14); below
+            -- it, the fingers close round the harmonica.
+            HandDrop = 0.05,
+            -- The clips (worm_instruments_assets' Source/Harmonica/Clips, Anim-Forge gesture specs): Hold, in the right
+            -- hand before the chest, while silent; Play, both hands cupped at the mouth, while notes sound. Flag 49
+            -- plays them on the upper body only and loops them. SwitchMs: the prop moves between the hand and the
+            -- mouth this long after the clip changes, as the hands arrive (the clips blend in about 125 ms).
+            Clips = { Dictionary = "worm_instr_harmonica", Hold = "hold", Play = "play", Flag = 49, SwitchMs = 150 },
+            ---@type "Case" | "Hat"
+            TipProp = "Hat",
+        },
+    },
 
     -- Effects (Phase 4, Phase 5): Dictionary, the note mark names, the glint's name, MarkInterval.
     -- NativeSounds (Phase 5): Bank, SoundSet, the sound names.

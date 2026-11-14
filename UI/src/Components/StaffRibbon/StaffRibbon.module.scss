@@ -1,0 +1,27 @@
+@use "../../Styles/tokens" as *;
+@use "../../Styles/motif" as *;
+
+// The ribbon: the staff on a surface strip; its notes travel inside it and are clipped at its ends.
+.Ribbon {
+    @include Staff;
+    position: relative;
+    height: $Size5;
+    overflow: hidden;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+}
+
+// A note: a small chip on the staff, centred on its height, written by its name.
+.Chip {
+    position: absolute;
+    transform: translate(-100%, -50%);
+    padding: 0 $Size1;
+    border: $BorderHairline;
+    border-radius: $RadiusControl;
+    background: $ColorSurfaceRaised;
+    font-family: $FontBody;
+    font-size: $TypeEyebrow;
+    font-weight: 600;
+    white-space: nowrap;
+    color: $ColorText;
+}
