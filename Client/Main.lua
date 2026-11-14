@@ -1,7 +1,17 @@
 -- The player's session: the play screen's open/close pair, the Play key, the restrictions that end a session (PLAN
 -- section 3). The server opens a session when an instrument's item is used (Main:Equip) and ends it (Main:PutAway);
 -- this file opens the play screen on it, closes the screen on Esc while the instrument stays in hand, reopens it on the
--- Play key, and ends the session itself when the player is down, cuffed or in a vehicle.
+-- Play key, and ends the session itself when the player is down, cuffed or in a vehicle. It also holds the one open/close
+-- pair every page goes through (CODESTYLE 2.22); the other files open theirs through Screen.
+
+-- Globals
+
+    ---@type table
+    -- The page pair's surface for the other client files (Client/Settings.lua's sound settings): a page opens only when
+    -- none holds the focus, and closes only when it is the one open, so two pages never fight over the cursor.
+    Screen = {}
+
+-- Globals
 
 -- Locals
 
@@ -24,6 +34,8 @@
     -- The instrument in hand (its Config.Instruments name), or nil.
     local CurrentKind = nil
     local IsScreenOpen = false
+    -- The page that holds the focus now ("Play", "Sound"), or nil.
+    local OpenPage = nil
     -- Notice_InHand is said once per session: the first time the screen closes with the instrument still in hand.
     local HasToldInHand = false
     -- The gate of the session check loop (CODESTYLE 2.10).
@@ -43,11 +55,12 @@
 
     -- UI
 
-        ---@param Page "Play"  The page to show
+        ---@param Page "Play" | "Sound"  The page to show
         ---@return nil
         -- The one way the page opens (CODESTYLE 2.22): focus and the page's message together, with what every page
         -- reads first (the locale, the server owner's accent, the hold time).
         Functions.UI.Open = function(Page)
+            OpenPage = Page
             SetNuiFocus(true, true)
             SendNUIMessage({
                 Type = "worm_instruments:NUI:OpenUI",
@@ -58,6 +71,7 @@
         ---@return nil
         -- The one way the page closes (CODESTYLE 2.22).
         Functions.UI.Close = function()
+            OpenPage = nil
             SetNuiFocus(false, false)
             SendNUIMessage({ Type = "worm_instruments:NUI:CloseUI" })
         end
@@ -131,6 +145,7 @@
 
             CurrentKind = Kind
             HasToldInHand = false
+            Settings.Prime()
             SendNUIMessage({
                 Type = "worm_instruments:NUI:SetInstrument",
                 Data = { Instrument = Kind, Family = Entry.Family, Range = Entry.Range, Polyphony = Entry.Polyphony },
@@ -168,7 +183,7 @@
         -- Opens the play screen on the instrument in hand, with the stage camera. The character takes up the playing
         -- pose at once (the owner, 2026-11-14: on K the playing begins, not on the first note).
         Functions.Session.OpenScreen = function()
-            if IsScreenOpen or not CurrentKind then return end
+            if IsScreenOpen or not CurrentKind or OpenPage then return end
 
             IsScreenOpen = true
             Utils.Hint.Remove(PlayHintID)
@@ -230,6 +245,26 @@
 
     -- Session
 
+    ---@param Page "Sound"  A page of another file
+    ---@return boolean  true when it opened; false while another page holds the focus
+    -- Opens a page through the one pair (CODESTYLE 2.22). Refused while any page, this resource's or another's, holds
+    -- the focus (PLAN section 9).
+    Screen.Open = function(Page)
+        if OpenPage or IsNuiFocused() then return false end
+
+        Functions.UI.Open(Page)
+        return true
+    end
+
+    ---@param Page "Sound"
+    ---@return nil
+    -- Closes that page, if it is the one open.
+    Screen.Close = function(Page)
+        if OpenPage ~= Page then return end
+
+        Functions.UI.Close()
+    end
+
 -- Functions
 
 -- Events
@@ -278,9 +313,13 @@
 
     ---@param Data table  {}
     ---@param Callback function
-    -- Esc on the play screen.
+    -- Esc, or a page's own close: the play screen closes with the instrument still in hand; any other page just closes.
     RegisterNUICallback("Close", function(Data, Callback)
-        Functions.Session.CloseScreen()
+        if OpenPage == "Play" then
+            Functions.Session.CloseScreen()
+        elseif OpenPage then
+            Functions.UI.Close()
+        end
         Callback("ok")
     end)
 

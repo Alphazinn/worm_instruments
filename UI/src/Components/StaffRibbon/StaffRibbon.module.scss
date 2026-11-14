@@ -1,11 +1,17 @@
 @use "../../Styles/tokens" as *;
 @use "../../Styles/motif" as *;
 
-// The ribbon: the staff on a surface strip; its notes travel inside it and are clipped at its ends.
+// The gap between the ribbon's staff lines, and how many gaps tall the ribbon is: four for the staff, one above and one
+// below for the outer notes' chips (StaffRibbon.jsx's EdgeShare). Open, so notes of different pitch stand apart (the
+// owner, 2026-11-14: on the tight staff they all sat on one line).
+$RibbonGap: $Size3;
+$RibbonGaps: 6;
+
+// The ribbon: the open staff on a surface strip; its notes travel inside it and are clipped at its ends.
 .Ribbon {
-    @include Staff;
+    @include Staff($RibbonGap);
     position: relative;
-    height: $Size5;
+    height: $RibbonGap * $RibbonGaps;
     overflow: hidden;
     border: $BorderHairline;
     border-radius: $RadiusControl;

@@ -1,0 +1,46 @@
+@use "../../Styles/tokens" as *;
+@use "../../Styles/motif" as *;
+
+// The sound settings (tier B, PLAN section 12): one patterned card of setting rows, the staff, the muted list.
+
+// The three setting rows in one card, parted by hairlines (UISTYLE 6.2).
+.Settings {
+    display: flex;
+    flex-direction: column;
+    padding: 0 $Size3;
+}
+
+// The script's motif between the settings and the list: the five staff lines where a plain panel has a hairline.
+.Staff {
+    @include StaffRule;
+    flex: none;
+}
+
+// The muted list under the staff: its eyebrow with the count, then the numbered rows or the empty line.
+.Muted {
+    display: flex;
+    flex-direction: column;
+    gap: $Size2;
+}
+
+.Eyebrow {
+    @include Eyebrow;
+}
+
+.List {
+    display: flex;
+    flex-direction: column;
+    gap: $Size1;
+}
+
+.Name {
+    font-size: $TypeBody;
+    font-weight: 600;
+}
+
+.Empty {
+    margin: 0;
+    font-size: $TypeMeta;
+    line-height: $LineDescription;
+    color: $ColorTextMuted;
+}

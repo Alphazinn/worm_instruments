@@ -25,6 +25,26 @@ Languages["En"] = {
     ["Hint_Metronome"] = "METRONOME",
     ["Hint_Turn"] = "TURN",
     ["Hint_Zoom"] = "ZOOM",
+    ["Hint_Close"] = "CLOSE",
+
+    -- The rings on a performer (worm_lib's), and the muted list's button.
+    ["Ring_Mute"] = "Mute for me",
+    ["Ring_Unmute"] = "Hear again",
+
+    -- The sound settings (Modals/Sound, /instruments).
+    ["Sound_Eyebrow"] = "SOUND · ONLY YOU",
+    ["Sound_Heading"] = "WHAT YOU HEAR",
+    ["Sound_Text"] = "Nothing here changes what other players hear.",
+    ["Sound_Volume"] = "Instrument volume",
+    ["Sound_VolumeText"] = "How loud every instrument around you plays.",
+    ["Sound_Hear"] = "Hear instruments",
+    ["Sound_HearText"] = "Off silences every performer for you, wherever you are.",
+    ["Sound_Marks"] = "Note marks",
+    ["Sound_MarksText"] = "Small notes rise from an instrument while it is played.",
+    ["Sound_Muted"] = "MUTED BY YOU · %d",
+    ["Sound_MutedNone"] = "NOBODY MUTED",
+    ["Sound_MutedNoneText"] = "Mute a performer from the ring on them and they are listed here until one of you leaves.",
+    ["Sound_MutedNow"] = "You no longer hear %s. Bring them back from your sound settings.",
 
     -- The Play key's line in the game's key bindings (Settings > Key Bindings > FiveM).
     ["KeyMapping_Play"] = "Play the instrument in your hand",

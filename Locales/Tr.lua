@@ -25,6 +25,26 @@ Languages["Tr"] = {
     ["Hint_Metronome"] = "METRONOM",
     ["Hint_Turn"] = "DÖNDÜR",
     ["Hint_Zoom"] = "YAKINLAŞ",
+    ["Hint_Close"] = "KAPAT",
+
+    -- The rings on a performer (worm_lib's), and the muted list's button.
+    ["Ring_Mute"] = "Benim için sustur",
+    ["Ring_Unmute"] = "Yeniden duy",
+
+    -- The sound settings (Modals/Sound, /instruments).
+    ["Sound_Eyebrow"] = "SES · YALNIZ SEN",
+    ["Sound_Heading"] = "NE DUYDUĞUN",
+    ["Sound_Text"] = "Buradaki hiçbir şey diğer oyuncuların duyduğunu değiştirmez.",
+    ["Sound_Volume"] = "Enstrüman sesi",
+    ["Sound_VolumeText"] = "Çevrendeki her enstrümanın ne kadar yüksek çaldığı.",
+    ["Sound_Hear"] = "Enstrümanları duy",
+    ["Sound_HearText"] = "Kapalıyken nerede olursan ol hiçbir çalgıcıyı duymazsın.",
+    ["Sound_Marks"] = "Nota işaretleri",
+    ["Sound_MarksText"] = "Çalınırken enstrümandan küçük notalar yükselir.",
+    ["Sound_Muted"] = "SUSTURDUKLARIN · %d",
+    ["Sound_MutedNone"] = "KİMSE SUSTURULMADI",
+    ["Sound_MutedNoneText"] = "Bir çalgıcıyı üzerindeki halkadan sustur; biriniz çıkana kadar burada listelenir.",
+    ["Sound_MutedNow"] = "Artık %s adlı kişiyi duymuyorsun. Ses ayarlarından geri açabilirsin.",
 
     -- The Play key's line in the game's key bindings (Settings > Key Bindings > FiveM).
     ["KeyMapping_Play"] = "Elindeki enstrümanı çal",

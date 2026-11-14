@@ -26,10 +26,14 @@
     color: $ColorText;
 }
 
+// The body's scroll bar has a lane of its own beside the content, so a long body's bar never lies over a card's edge
+// (Phase 4's sound settings with a long muted list).
 .Body {
     display: flex;
     flex-direction: column;
     gap: $Size3;
+    padding-right: $Size1;
+    scrollbar-gutter: stable;
 }
 
 // The footer: the primary full width, the way back under it as a key hint (the owner, 2026-11-01: no boxed Keep beside

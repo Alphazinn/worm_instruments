@@ -17,18 +17,35 @@ import { useLocale } from "../../Hooks/useLocale";
 import { useNUIEvent } from "../../Hooks/useNUIEvent";
 import { usePointerDrag } from "../../Hooks/usePointerDrag";
 import { usePlayStore } from "../../Stores/PlayStore";
+import { useSoundStore } from "../../Stores/SoundStore";
 import { useUIStore } from "../../Stores/UIStore";
 import { CreateChain, GetContext } from "../../Utils/AudioEngine";
 import { SendNUI } from "../../Utils/Fetch";
 import { Counter } from "../../Utils/Format";
 import { GetOffsets } from "../../Utils/KeyMaps";
 import { StartMetronome, StopMetronome } from "../../Utils/Metronome";
+import { CreateOutbox } from "../../Utils/NoteClock";
 import { CreatePlayer, LoadSet } from "../../Utils/Sampler";
 import ScreenTexture from "../../Views/ScreenTexture/ScreenTexture";
 import Styles from "./Play.module.scss";
 
 /** The velocity every key plays at: a computer key has no touch, so every note is a firm, even one (of MIDI's 127). */
 const KeyVelocity = 100;
+
+/** A batch note's K (PLAN section 8): 1 a note begins, 0 it ends. */
+const NoteBegins = 1;
+
+/** A batch note's K when it ends. */
+const NoteEnds = 0;
+
+/** The way the note is played, as the index of the instrument's Articulations (Shared/Derived.lua): its first. */
+const Articulation = 1;
+
+/** The player's playing on its way to everyone in earshot (Utils/NoteClock.js): one outbox for the page's life. */
+const Outbox = CreateOutbox(
+    (Batch) => SendNUI(SEND_EVENTS.NOTES, Batch),
+    () => useSoundStore.getState().Engine
+);
 
 /** Most notes on the staff ribbon at once: a fast run past it drops the oldest, which have nearly left anyway. */
 const RibbonMax = 32;
@@ -66,7 +83,8 @@ const Reserved = {
  * letters, with the staff ribbon over it and the key hints at its top-left. The centre and the top-right stay open.
  *
  * Lua hands the instrument over (SetInstrument): its sound set loads ("tuning up"), and from then on each key down plays
- * its note at once on this page and each key up ends it. A right-button drag turns the camera and the wheel zooms (the
+ * its note at once on this page and each key up ends it; both go into the outbox, whose batches Lua relays to everyone
+ * in earshot (PLAN Phase 4). A right-button drag turns the camera and the wheel zooms (the
  * page holds the mouse, so it tells Lua). Esc closes the screen; the instrument stays in hand.
  *
  * Its signature marks (PLAN section 12): the chamfered card, the handwritten mark beside the hero word, the counter on
@@ -109,13 +127,22 @@ const Play = () => {
     const [Ribbon, SetRibbon] = useState([]);
 
     const Offsets = useMemo(() => (KeyMap ? GetOffsets(KeyMap) : new Map()), [KeyMap]);
+    // The keys' own span, lowest offset to highest: the ribbon spreads its notes over what the keys play now, not over
+    // the whole instrument, so one octave's notes stand apart (the owner, 2026-11-14: "araları hala çok yakın").
+    const Span = useMemo(() => {
+        const Values = [...Offsets.values()];
+        return Values.length > 0 ? [Math.min(...Values), Math.max(...Values)] : [0, 0];
+    }, [Offsets]);
 
     /** Ends every note the keys hold (the screen closed, the window lost focus, the instrument changed). */
     const ReleaseAll = useCallback(() => {
         const Player = Sound.current.Player;
         if (Player) {
             const Now = GetContext().currentTime;
-            for (const Note of Held.current.values()) Player.NoteOff(Note, Now);
+            for (const Note of Held.current.values()) {
+                Player.NoteOff(Note, Now);
+                Outbox.Record(Note, KeyVelocity, NoteEnds, Articulation);
+            }
         }
         Held.current.clear();
         ClearPressed();
@@ -216,12 +243,16 @@ const Play = () => {
             const Note = State.GetBase() + Offset;
             if (Note < State.Range[0] || Note > State.Range[1]) return;
             Player.NoteOn(Note, KeyVelocity, GetContext().currentTime);
+            Outbox.Record(Note, KeyVelocity, NoteBegins, Articulation);
             Held.current.set(Code, Note);
             SetPressed(Code, true);
 
+            // Its height on the ribbon, 0 the keys' lowest note and 1 their highest, fixed as it is written: an octave
+            // shift later moves the keys, not the notes already travelling.
+            const Height = (Offset - Span[0]) / Math.max(Span[1] - Span[0], 1);
             NextRibbonID.current += 1;
             const RibbonID = NextRibbonID.current;
-            SetRibbon((Notes) => [...Notes.slice(-(RibbonMax - 1)), { ID: RibbonID, Note }]);
+            SetRibbon((Notes) => [...Notes.slice(-(RibbonMax - 1)), { ID: RibbonID, Note, Height }]);
         };
 
         const HandleUp = (Event) => {
@@ -232,6 +263,7 @@ const Play = () => {
             SetPressed(Code, false);
             const Player = Sound.current.Player;
             if (Player) Player.NoteOff(Note, GetContext().currentTime);
+            Outbox.Record(Note, KeyVelocity, NoteEnds, Articulation);
         };
 
         window.addEventListener("keydown", HandleDown);
@@ -242,7 +274,7 @@ const Play = () => {
             window.removeEventListener("keyup", HandleUp);
             window.removeEventListener("blur", ReleaseAll);
         };
-    }, [IsVisible, Offsets, ShiftOctave, StepBpm, SetMetronome, SetPressed, ReleaseAll]);
+    }, [IsVisible, Offsets, Span, ShiftOctave, StepBpm, SetMetronome, SetPressed, ReleaseAll]);
 
     // The camera: a right-button drag is held by the page (usePointerDrag) and its moves are sent once a frame.
     const HandleDragEnd = useCallback(() => {
@@ -359,7 +391,7 @@ const Play = () => {
                                 <KeyHint Faces={IconFaces.Turn} Label={L("Hint_Turn")} />
                                 <KeyHint Faces={IconFaces.Zoom} Label={L("Hint_Zoom")} />
                             </div>
-                            <StaffRibbon Notes={Ribbon} Range={Range} OnGone={HandleRibbonGone} />
+                            <StaffRibbon Notes={Ribbon} OnGone={HandleRibbonGone} />
                             <KeyBed
                                 KeyMap={KeyMap}
                                 Base={Bases[BaseIndex] ?? 0}

@@ -1172,7 +1172,39 @@ Proved:
 - Server console: `instrumentghost many`, stand in the middle. *(Six are heard, not eight.)*
 - With a second player if one is at hand: one plays, the other listens, then mutes them from the ring and brings them back from the sound settings.
 **Commit:** `feat(notes): relay notes to players in earshot with positional sound`
-**As applied:**
+**As applied:** 2026-11-14, in four rounds the owner agreed before writing (the relay, the sound in the world and the ghost; the sound settings' wireframe, the settings and the mute ring; the note marks; the styling). Agreed at the measurement:
+- The page batches the player's own notes (`NoteClock.CreateOutbox`), since only it knows when each key moved; Lua forwards. Sends keep `Network.MinBatchGap` (60 ms) apart, which the server holds too.
+- A performer who leaves the performers' list is stopped on every client by that bag's change; no event was added for it.
+- The ghost was a ped the server made, listed in a temporary global bag.
+- A player who leaves is broadcast to every client (`worm_instruments:Notes:Left`), so they come off the muted lists: the one event section 8 lacked.
+- Every performer has a Web Audio `PannerNode` (HRTF, the linear fall from `FullDistance` to the hear distance), a low-pass and a level for a wall, and a send into one indoor echo written in code (decaying noise, no recorded room).
+- The ring labels are written as `Hint_Play` was: "Mute for me" / "Hear again".
+- `Articulations = { "Breath" }` per instrument; the server checks a note's `A` against its count.
+- The play screen's focus pair stays in `Client/Main.lua`; the sound settings open through its `Screen.Open`.
+- A placed instrument's seat check waits for Phase 11.
+
+Found while writing:
+- A whole number from a payload may arrive as 5.0 (json, then msgpack): the server checks "whole", not `math.type`.
+- `Network.MinBatchGap`, `Security.ListeningRateLimit` and `Sound.ListeningSendMargin` were added; "hear instruments" switched twice within the limit sends where it ended, after the gap.
+- The `Stepper` draws no eyebrow when it has no label (inside a setting row).
+- The `Modal` body's scroll bar has its own lane (it lay over a card's edge with a long muted list).
+- FiveM-PTFX-Forge runs as `.venv\Scripts\python.exe -m ptfxforge` from its `Source`: its poetry and its scripts still point at an older folder. The tool was not changed.
+
+The owner's changes in test:
+- The note marks: the alpha-blended smoke plume template (`des_gas_station/ent_ray_paleto_gas_plume`) was chosen in game over the additive ped glow (it does not rise; its gravity cannot be written), at scale 0.3.
+  - Four looped marks at once lay over each other, so a mark is one burst a note begun, its loop run `Effects.MarkBurstMs` and stopped (a looped effect, since a one-shot one fired now and then does not show, CODESTYLE 2.25), at least `MarkGap` apart, `MarkQueueMax` waiting at most.
+  - They are born where the instrument is played (`Mark`, else `MouthGrip`, else `Grip`: every client knows the bone without finding the prop).
+  - Notes begun within `ChordWindow` raise one beamed mark; single notes take the other three pictures in turn.
+  - They rise faster (they clumped before the face).
+  - The four pictures are drawn by the assets' `Source/NoteMarks/draw_note_marks.py`, packed by FiveM-PTFX-Forge into `stream/worm_instr_marks.ypt`. Note heads without letters on the ribbon were tried and dropped.
+- The play screen's ribbon (Phase 3): its chips stand apart. Each note's height is its place among the keys the player plays from, fixed when written, and the staff is open across a ribbon six gaps tall.
+- The temporary `instrumentghost` (its command, its bag, the rings on every ped) and `/instrumentmarks` were deleted; SK12 keeps their names gone.
+
+Proved:
+- `checknotes` NT1–NT8 by `injectnotes`.
+- SK5 at 41 keys; SK12's new cases; SK8 red on purpose; the guard green, with its rows for worm_lib's option keys and `/instruments`.
+- The slop audit was walked on the sound settings in Playwright at 1080p (nine muted, scrolled) and 3440×1440 (Tr, one muted), and in game by the owner.
+- The owner heard the ghost: the distance fall, direction, the wall, the echo indoors, six of eight, mute and hear again, volume and "hear instruments", the settings kept over a restart. The logs were clean in every round.
 
 ### Phase 5 — Setting up and tips
 **Goal:** a performer sets up with a case in front of them and players nearby tip them in cash.

@@ -108,12 +108,13 @@
         ---@param IsDropped boolean  The player left: nothing is sent to them
         ---@return nil
         -- Ends a session, whoever asked: the item used again, the client's own check, the item gone, the player gone.
-        -- A player with no session is left alone, so every caller may call it.
+        -- A player with no session is left alone, so every caller may call it. Their relay ends with it (Server/Notes).
         Functions.Session.End = function(Source, ReasonKey, IsDropped)
             local Session <const> = Sessions[Source]
             if not Session then return end
 
             Sessions[Source] = nil
+            Notes.End(Source)
             if not IsDropped then
                 Player(Source).state:set(InstrumentBag, false, true)
                 TriggerClientEvent("worm_instruments:Main:PutAway", Source, ReasonKey, Session.Kind)

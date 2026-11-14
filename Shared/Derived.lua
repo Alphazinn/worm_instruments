@@ -64,6 +64,10 @@ local Technical <const> = {
         ---@type number
         -- A listener is sent notes from this many times the hear distance, so the sound fades in before the edge.
         HearMargin = 1.2,
+        ---@type number
+        -- Fewest ms between two accepted batches from one performer. The page gathers BatchInterval (80) of playing
+        -- into each and spaces its sends by at least this, so only a client sending on its own goes faster.
+        MinBatchGap = 60,
     },
 
     Security = {
@@ -79,6 +83,8 @@ local Technical <const> = {
         AdminRateLimit = 500,
         ---@type number  Minimum ms between accepted audience reports.
         AudienceRateLimit = 5000,
+        ---@type number  Minimum ms between accepted "hear instruments" switches from one player.
+        ListeningRateLimit = 1000,
     },
 
     Sound = {
@@ -106,6 +112,13 @@ local Technical <const> = {
         ---@type number
         -- Ms of silence after which the listener loop stops (0.00 ms idle).
         ListenerIdleAfter = 3000,
+        ---@type number
+        -- Metres within which the "Mute for me" ring shows on a performer: close enough to mean that one, not a crowd.
+        MuteDistance = 3.0,
+        ---@type number
+        -- Ms added to Security.ListeningRateLimit before a second "hear instruments" switch is sent, so a switch flicked
+        -- twice is not dropped by the server's limit after the network evens out the gap.
+        ListeningSendMargin = 250,
     },
 
     Camera = {
@@ -190,6 +203,7 @@ local Technical <const> = {
     --   Parts      for a placed instrument: every moving part's model and local offset, written by the prop's
     --              modelling script (never by hand)
     --   Polyphony  most notes the page lets sound at once from this instrument
+    --   Mark       { Bone, Offset } where its note marks are born, when not where it is played (MouthGrip, else Grip)
     -- An instrument with no Family is not built yet: its item is not registered, and the server refuses it.
     Instruments = {
         Harmonica = {
@@ -206,6 +220,10 @@ local Technical <const> = {
             ---@type number
             -- A mouth covers about four holes of a harmonica: a fifth note at once releases the oldest.
             Polyphony = 4,
+            ---@type string[]
+            -- The ways a note can be played, by the index a batch's A carries (PLAN section 8): the server refuses an A
+            -- the instrument does not have. The harmonica has one, its breath (the sample set's own Articulation).
+            Articulations = { "Breath" },
             ---@type string
             -- The hand prop, modelled for this script (worm_instruments_assets' Source/Harmonica/make_harmonica.py).
             Model = "worm_instr_harmonica",
@@ -237,8 +255,46 @@ local Technical <const> = {
         },
     },
 
-    -- Effects (Phase 4, Phase 5): Dictionary, the note mark names, the glint's name, MarkInterval.
-    -- NativeSounds (Phase 5): Bank, SoundSet, the sound names.
+    Effects = {
+        ---@type string
+        -- The note marks' particle dictionary: worm_instruments_assets' stream/worm_instr_marks.ypt, made with
+        -- FiveM-PTFX-Forge from the assets' Source/NoteMarks (four note pictures drawn by draw_note_marks.py).
+        Dictionary = "worm_instr_marks",
+        ---@type string[]
+        -- The single notes' marks (a quarter, an eighth, a sixteenth), taken in turn: one mark a note (the owner,
+        -- 2026-11-14: all at once they lay over each other; one a note, in a row). Each is the alpha-blended smoke
+        -- plume's template the owner chose in game over the additive glow, made to puff once a run (burst): a looped
+        -- effect shows where a one-shot one fired now and then does not (CODESTYLE 2.25), so each mark is a loop run for
+        -- MarkBurstMs and stopped.
+        Marks = { "worm_instr_mark_1", "worm_instr_mark_2", "worm_instr_mark_3" },
+        ---@type string
+        -- A chord's mark, the beamed pair: notes begun together raise this one mark instead of one each (the owner,
+        -- 2026-11-14).
+        ChordMark = "worm_instr_mark_4",
+        ---@type number
+        -- Ms within which notes begun count as one chord: two keys pressed "together" land up to ~20 ms apart.
+        ChordWindow = 30,
+        ---@type number
+        -- Ms a mark's loop runs before it is stopped: long enough for its one puff, short of a second one. The mark
+        -- itself lives on, rising, after the stop.
+        MarkBurstMs = 100,
+        ---@type number
+        -- Fewest ms between two marks of one performer: a fast run makes a steady line of marks, not a clump.
+        MarkGap = 150,
+        ---@type number
+        -- Most marks one performer has waiting; past it a note raises none, so fast playing never builds a backlog
+        -- that keeps rising after the playing stopped.
+        MarkQueueMax = 4,
+        ---@type number
+        -- Ms between the looks at the waiting marks, while any wait.
+        MarkCheckInterval = 50,
+        ---@type number
+        -- The marks' size (the effect's own scale). Set by the owner in game with a temporary command (Phase 4,
+        -- 2026-11-14): 1.0 drew a note as big as a head.
+        MarkScale = 0.3,
+    },
+
+    -- Effects (Phase 5): the glint's name. NativeSounds (Phase 5): Bank, SoundSet, the sound names.
 }
 
 ---@param Into table # The table being filled.

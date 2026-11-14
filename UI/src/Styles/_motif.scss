@@ -16,22 +16,22 @@ $StaffGap: $Size1;
 // The staff's whole height, first line to last: four gaps.
 $StaffHeight: calc(#{$StaffGap} * #{$StaffLines - 1});
 
-// The staff drawn on a surface: five hairlines, $StaffGap apart, centred on the surface's height. One repeating
-// hairline gradient band clipped to the five lines' height is the cheapest way to draw them -- no element per line.
-// The gradient is a hairline's hard edge (two stops at one place), not a colour fade, so it is not UISTYLE 3's banned
-// gradient fill.
-@mixin Staff {
+// The staff drawn on a surface: five hairlines, $Gap apart, centred on the surface's height. One repeating hairline
+// gradient band clipped to the five lines' height is the cheapest way to draw them -- no element per line. The
+// gradient is a hairline's hard edge (two stops at one place), not a colour fade, so it is not UISTYLE 3's banned
+// gradient fill. A staff that notes are written on (the ribbon) opens its lines wider than a staff drawn as a rule.
+@mixin Staff($Gap: $StaffGap) {
     background-color: $ColorSurface;
     background-image: repeating-linear-gradient(
         to bottom,
         $ColorBorder 0,
         $ColorBorder 0.1vh,
         transparent 0.1vh,
-        transparent $StaffGap
+        transparent $Gap
     );
     background-repeat: no-repeat;
     background-position: left center;
-    background-size: 100% calc(#{$StaffHeight} + 0.1vh);
+    background-size: 100% calc(#{$Gap} * #{$StaffLines - 1} + 0.1vh);
 }
 
 // The staff as a rule between two parts of a card: the five lines alone, on the card's own surface, a staff's height

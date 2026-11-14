@@ -8,6 +8,7 @@
         General = {},
         Player = {},
         Hint = {},
+        Interact = {},
     }
 
 -- Globals
@@ -159,5 +160,29 @@
         end
 
     -- Hint
+
+    -- Interact
+
+        ---@param Name string  The option's own name (adding it again replaces it)
+        ---@param Label string  A finished, localised line
+        ---@param Distance number  Metres the player stands within for it to offer
+        ---@param CanInteract fun(EntityID: number): boolean  Whether it shows on that entity now
+        ---@param OnSelect fun(Data: table)  worm_lib's selection, Data.entity the entity
+        ---@return table  One option as worm_lib reads it
+        -- worm_lib's option keys are its own: they are written here only, as the other worm_ scripts do.
+        Utils.Interact.Option = function(Name, Label, Distance, CanInteract, OnSelect)
+            return { name = Name, label = Label, distance = Distance, canInteract = CanInteract, onSelect = OnSelect }
+        end
+
+        ---@param Options table[]  From Utils.Interact.Option
+        ---@return nil
+        -- Rings on every other player's ped, each option's canInteract choosing whom (a performer): worm_lib gives a
+        -- player ped only its global player options (an earlier worm_ script's test: a ring on a player's network id
+        -- never shows).
+        Utils.Interact.AddGlobalPlayer = function(Options)
+            exports.worm_lib:addInteractionGlobalPlayer(Options)
+        end
+
+    -- Interact
 
 -- Functions
