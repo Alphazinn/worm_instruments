@@ -1,0 +1,545 @@
+{
+    "Version": 1,
+    "Sets": {
+        "Piano": {
+            "Method": "Recorded",
+            "Range": [
+                21,
+                108
+            ],
+            "Release": 0.35,
+            "Articulation": "Sustain",
+            "Source": "VCSL, Grand Piano, Steinway B (CC0)",
+            "Samples": [
+                {
+                    "File": "Piano/22.ogg",
+                    "Root": 22,
+                    "Tune": -2.3,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/24.ogg",
+                    "Root": 24,
+                    "Tune": -4.4,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/26.ogg",
+                    "Root": 26,
+                    "Tune": 17.1,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/28.ogg",
+                    "Root": 28,
+                    "Tune": -6.8,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/30.ogg",
+                    "Root": 30,
+                    "Tune": -2.6,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/32.ogg",
+                    "Root": 32,
+                    "Tune": 7.8,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/34.ogg",
+                    "Root": 34,
+                    "Tune": 9.6,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/36.ogg",
+                    "Root": 36,
+                    "Tune": 9.1,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/38.ogg",
+                    "Root": 38,
+                    "Tune": 11.6,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/40.ogg",
+                    "Root": 40,
+                    "Tune": -4.5,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/42.ogg",
+                    "Root": 42,
+                    "Tune": -5.7,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/44.ogg",
+                    "Root": 44,
+                    "Tune": 4.8,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/46.ogg",
+                    "Root": 46,
+                    "Tune": -6.1,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/48.ogg",
+                    "Root": 48,
+                    "Tune": -4.4,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/50.ogg",
+                    "Root": 50,
+                    "Tune": -3.8,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/52.ogg",
+                    "Root": 52,
+                    "Tune": -2.6,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/54.ogg",
+                    "Root": 54,
+                    "Tune": -0.8,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/56.ogg",
+                    "Root": 56,
+                    "Tune": -0.4,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/58.ogg",
+                    "Root": 58,
+                    "Tune": -1.1,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/60.ogg",
+                    "Root": 60,
+                    "Tune": -1.6,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/62.ogg",
+                    "Root": 62,
+                    "Tune": 1.9,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/64.ogg",
+                    "Root": 64,
+                    "Tune": -2.8,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/66.ogg",
+                    "Root": 66,
+                    "Tune": -1.3,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/68.ogg",
+                    "Root": 68,
+                    "Tune": -1.1,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/70.ogg",
+                    "Root": 70,
+                    "Tune": -2.4,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/72.ogg",
+                    "Root": 72,
+                    "Tune": 2.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/74.ogg",
+                    "Root": 74,
+                    "Tune": 2.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/76.ogg",
+                    "Root": 76,
+                    "Tune": 2.1,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/78.ogg",
+                    "Root": 78,
+                    "Tune": 2.7,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/80.ogg",
+                    "Root": 80,
+                    "Tune": -0.4,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/82.ogg",
+                    "Root": 82,
+                    "Tune": 1.3,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/84.ogg",
+                    "Root": 84,
+                    "Tune": -2.5,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/86.ogg",
+                    "Root": 86,
+                    "Tune": 0.3,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/88.ogg",
+                    "Root": 88,
+                    "Tune": -3.1,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/90.ogg",
+                    "Root": 90,
+                    "Tune": 8.3,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/92.ogg",
+                    "Root": 92,
+                    "Tune": 1.2,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/94.ogg",
+                    "Root": 94,
+                    "Tune": 8.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/96.ogg",
+                    "Root": 96,
+                    "Tune": -7.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/98.ogg",
+                    "Root": 98,
+                    "Tune": -0.9,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/100.ogg",
+                    "Root": 100,
+                    "Tune": -6.2,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/102.ogg",
+                    "Root": 102,
+                    "Tune": 4.9,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "Piano/104.ogg",
+                    "Root": 104,
+                    "Tune": -2.6,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                }
+            ]
+        },
+        "Violin": {
+            "Method": "Recorded",
+            "Range": [
+                55,
+                100
+            ],
+            "Release": 0.18,
+            "Articulation": "Arco",
+            "Source": "VSCO 2 CE, Solo Violin, Arco Vib (CC0)",
+            "Samples": [
+                {
+                    "File": "Violin/55.ogg",
+                    "Root": 55,
+                    "Tune": -3.0,
+                    "LoopStart": 0.45027,
+                    "LoopEnd": 1.63023
+                },
+                {
+                    "File": "Violin/57.ogg",
+                    "Root": 57,
+                    "Tune": 2.0,
+                    "LoopStart": 0.65093,
+                    "LoopEnd": 3.16556
+                },
+                {
+                    "File": "Violin/60.ogg",
+                    "Root": 60,
+                    "Tune": -0.9,
+                    "LoopStart": 0.45132,
+                    "LoopEnd": 6.80683
+                },
+                {
+                    "File": "Violin/64.ogg",
+                    "Root": 64,
+                    "Tune": 0.5,
+                    "LoopStart": 0.75075,
+                    "LoopEnd": 2.43401
+                },
+                {
+                    "File": "Violin/67.ogg",
+                    "Root": 67,
+                    "Tune": 4.6,
+                    "LoopStart": 0.65034,
+                    "LoopEnd": 3.0151
+                },
+                {
+                    "File": "Violin/69.ogg",
+                    "Root": 69,
+                    "Tune": -14.4,
+                    "LoopStart": 0.45041,
+                    "LoopEnd": 1.37735
+                },
+                {
+                    "File": "Violin/72.ogg",
+                    "Root": 72,
+                    "Tune": -0.5,
+                    "LoopStart": 0.4512,
+                    "LoopEnd": 1.25007
+                },
+                {
+                    "File": "Violin/76.ogg",
+                    "Root": 76,
+                    "Tune": -4.4,
+                    "LoopStart": 0.45036,
+                    "LoopEnd": 2.49855
+                },
+                {
+                    "File": "Violin/79.ogg",
+                    "Root": 79,
+                    "Tune": -9.5,
+                    "LoopStart": 0.75014,
+                    "LoopEnd": 1.53401
+                },
+                {
+                    "File": "Violin/81.ogg",
+                    "Root": 81,
+                    "Tune": 4.4,
+                    "LoopStart": 0.55045,
+                    "LoopEnd": 1.44798
+                },
+                {
+                    "File": "Violin/84.ogg",
+                    "Root": 84,
+                    "Tune": 4.7,
+                    "LoopStart": 0.55029,
+                    "LoopEnd": 1.25095
+                },
+                {
+                    "File": "Violin/88.ogg",
+                    "Root": 88,
+                    "Tune": -10.8,
+                    "LoopStart": 0.65005,
+                    "LoopEnd": 1.71855
+                },
+                {
+                    "File": "Violin/91.ogg",
+                    "Root": 91,
+                    "Tune": -10.3,
+                    "LoopStart": 0.45005,
+                    "LoopEnd": 2.44041
+                },
+                {
+                    "File": "Violin/93.ogg",
+                    "Root": 93,
+                    "Tune": -10.6,
+                    "LoopStart": 0.55025,
+                    "LoopEnd": 1.28385
+                },
+                {
+                    "File": "Violin/96.ogg",
+                    "Root": 96,
+                    "Tune": 3.1,
+                    "LoopStart": 0.6502,
+                    "LoopEnd": 2.2795
+                }
+            ]
+        },
+        "AcousticGuitar": {
+            "Method": "Synth",
+            "Range": [
+                40,
+                84
+            ],
+            "Release": 0.25,
+            "Articulation": "Pluck",
+            "Source": "synthesised by build_sounds.py",
+            "Samples": [
+                {
+                    "File": "AcousticGuitar/40.ogg",
+                    "Root": 40,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/43.ogg",
+                    "Root": 43,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/46.ogg",
+                    "Root": 46,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/49.ogg",
+                    "Root": 49,
+                    "Tune": 0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/52.ogg",
+                    "Root": 52,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/55.ogg",
+                    "Root": 55,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/58.ogg",
+                    "Root": 58,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/61.ogg",
+                    "Root": 61,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/64.ogg",
+                    "Root": 64,
+                    "Tune": 0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/67.ogg",
+                    "Root": 67,
+                    "Tune": 0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/70.ogg",
+                    "Root": 70,
+                    "Tune": 0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/73.ogg",
+                    "Root": 73,
+                    "Tune": 0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/76.ogg",
+                    "Root": 76,
+                    "Tune": 0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/79.ogg",
+                    "Root": 79,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                },
+                {
+                    "File": "AcousticGuitar/82.ogg",
+                    "Root": 82,
+                    "Tune": -0.0,
+                    "LoopStart": 0.0,
+                    "LoopEnd": 0.0
+                }
+            ]
+        }
+    }
+}

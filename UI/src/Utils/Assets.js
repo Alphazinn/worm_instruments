@@ -21,3 +21,13 @@ export const GetImage = (Category, FileName) => {
 export const GetSound = (Name) => {
     return new Audio(`https://cfx-nui-${ResourceName}/Assets/SoundEffects/${Name}.wav`);
 };
+
+/**
+ * Resolves a file of the instruments' sample library (Assets/Sounds): its Manifest.json, or a sample the manifest
+ * names by its path inside the library ("Piano/Recorded/60.ogg").
+ * @param {string} Path - the file's path inside Assets/Sounds
+ * @returns {string} absolute cfx-nui URL
+ */
+export const GetSample = (Path) => {
+    return `https://cfx-nui-${ResourceName}/Assets/Sounds/${Path}`;
+};
