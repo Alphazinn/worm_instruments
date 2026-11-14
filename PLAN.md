@@ -756,6 +756,8 @@ All `(new)`, all usable, none consumed: using one takes the instrument out, usin
 
 Server owners must register these items in their inventory; repeat this list in the install notes at release. The script has no shop (section 10).
 
+**Item images** (the owner, 2026-11-14, after Phase 3): every item has a 512×512 transparent PNG in `Assets/Images/Items/<item>.png`, as worm_mechanic's and worm_skateboard's do. Each is rendered from its instrument's own prop, in the phase that models it, by the same Fable sub-agent that modelled the prop, with the assets' `Source/ItemIcons/render_item_icon.py` (a three-quarter view from a little above, lit from the top-left; the source PNG stays beside it). It is copied into the test server's `qb-inventory/html/images` too, and the install notes say where to put them for each inventory.
+
 ## 7. Persistence
 
 - **What persists:** instrument bans and the no-playing zones added in game. Nothing else survives a restart: sessions, placed instruments, cases and tip totals all end with the resource.
