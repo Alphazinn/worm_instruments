@@ -51,8 +51,6 @@ Config = {
     Effects = {
         ---@type boolean  Small note marks rise from an instrument while it is played.
         HasNoteMarks = true,
-        ---@type boolean  A short glint shows on the case when a tip lands.
-        HasTipGlint = true,
     },
 
     -- One entry per instrument. Item: the inventory item that takes it out. IsEnabled: false removes it from the
@@ -93,6 +91,8 @@ Config = {
         TipCustomMax = 1000,
         ---@type "cash" | "bank"  Account a tip is taken from and paid into.
         TipAccount = "cash",
+        ---@type number  Metres a player can walk from their case before it packs itself.
+        PackDistance = 10.0,
     },
 
     Npc = {

@@ -17,6 +17,12 @@ Languages["En"] = {
     ["Play_MetronomeText"] = "Only you hear the click.",
     ["Play_Bpm"] = "%d BPM",
     ["Play_Loading"] = "TUNING UP",
+    ["Play_SetUp"] = "SET UP",
+    ["Play_SetUpText"] = "Put your case down here and people nearby can tip you.",
+    ["Play_PackUp"] = "PACK UP",
+    ["Play_PackUpText"] = "Your case comes back and tipping ends.",
+    ["Status_SetUp"] = "SET UP",
+    ["Status_NotSetUp"] = "NOT SET UP",
 
     -- Key hints: the play screen's, and the worm_lib strip's while the instrument is in hand with the screen closed.
     ["Hint_Play"] = "Play",
@@ -27,9 +33,13 @@ Languages["En"] = {
     ["Hint_Zoom"] = "ZOOM",
     ["Hint_Close"] = "CLOSE",
 
-    -- The rings on a performer (worm_lib's), and the muted list's button.
+    -- The rings on a performer and on a case (worm_lib's), and the muted list's button. A ring whose gate fails for a
+    -- reason the player can fix shows as "<ring> - <reason>" (CODESTYLE 1.13).
     ["Ring_Mute"] = "Mute for me",
     ["Ring_Unmute"] = "Hear again",
+    ["Ring_Tip"] = "Tip",
+    ["Ring_Needs"] = "%s - %s",
+    ["Ring_TooFar"] = "step closer",
 
     -- The sound settings (Modals/Sound, /instruments).
     ["Sound_Eyebrow"] = "SOUND · ONLY YOU",
@@ -46,6 +56,24 @@ Languages["En"] = {
     ["Sound_MutedNoneText"] = "Mute a performer from the ring on them and they are listed here until one of you leaves.",
     ["Sound_MutedNow"] = "You no longer hear %s. Bring them back from your sound settings.",
 
+    -- The tip window (Modals/Tip), what a tip says to both sides, and the busking pill (Views/BuskPill).
+    ["Tip_Eyebrow"] = "TIP · %s",
+    ["Tip_Text"] = "Cash from your pocket goes straight into their case.",
+    ["Tip_Other"] = "OTHER AMOUNT",
+    ["Tip_OtherExample"] = "e.g. 35",
+    ["Tip_OtherHint"] = "UP TO $%d",
+    ["Tip_Pocket"] = "IN YOUR POCKET",
+    ["Tip_Button"] = "TIP $%d",
+    ["Tip_Cancel"] = "KEEP YOUR MONEY",
+    ["Tip_TooPoor"] = "You only have $%d in cash. Pick a smaller amount.",
+    ["Tip_Gone"] = "They packed up before the tip went in. Your money is still yours.",
+    ["Tip_TooFar"] = "Step closer to their case to tip.",
+    ["Tip_Sent"] = "You tipped %s $%d.",
+    ["Tip_Received"] = "%s tipped you $%d.",
+    ["Busk_Eyebrow"] = "TIPS · THIS SET",
+    ["Busk_Listening"] = "%d LISTENING",
+    ["Busk_PackedFar"] = "You walked away from your case, so it was packed up. Set up again from the play screen.",
+
     -- The Play key's line in the game's key bindings (Settings > Key Bindings > FiveM).
     ["KeyMapping_Play"] = "Play the instrument in your hand",
 
@@ -58,4 +86,5 @@ Languages["En"] = {
     ["Refuse_Cuffed"] = "Your hands are cuffed. Get them free first.",
     ["Refuse_Down"] = "You cannot play in this state. Get back on your feet first.",
     ["Refuse_Disabled"] = "This instrument is switched off on this server.",
+    ["Refuse_NoRoomForCase"] = "There is no room for your case here. Step to open ground.",
 }

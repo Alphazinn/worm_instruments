@@ -1225,7 +1225,33 @@ Proved:
 - Type more than you carry and tip. *(Refused with what you have.)*
 - Press `PACK UP`; die while set up.
 **Commit:** `feat(busking): add setting up, the tip window and tips`
-**As applied:**
+**As applied:** 2026-11-15, in four rounds the owner agreed at the measurement: the set up and the tip with the two screens' wireframes; the props; the glint and the sounds; the styling. Agreed at the measurement:
+- The tip ring is given once to the tip props' models (`addInteractionModel`), each case chosen by its `Performer` bag, not one `addInteractionEntity` per case. Its twin `Tip - step closer` shows from `TipDistance` to `RingDistance`, and a player's own case offers them nothing.
+- The server cannot read the ground: it makes the case `GroundDrop` under the ped, `CaseDistance` ahead along the ped's own heading, and the performer's client settles it (`PlaceObjectOnGroundProperly`). `Refuse_NoRoomForCase` is the client's ground and line check before it asks. The place is never read from a payload, and `Busking:SetUp` takes none.
+- The amp moves to Phase 9, where the first instrument with `AmpedHearDistance` arrives.
+- The `Listeners` bag is written by a loop that runs each second while anyone is set up, counted as the relay counts, and written on change only (`Notes.CountListeners`).
+- The tip window opens at once with `—` in the pocket until `GetCash` answers. A new NUI message, `SetTip`, carries the performer and then the cash; `Screen.Open` stays as it was.
+
+Found while writing:
+- A display-font number stands a few pixels past its box, and a modal's body scrolled by them with its edge faded over the sum: the pocket's sum keeps its overflow (Playwright).
+- `Modal` takes an optional `Hero` beside its block.
+
+The owner's changes in test:
+- The props are the script's own, modelled by a Fable sub-agent and converted with FiveM-Prop-Converter (static collision, textures in the `.ydr`):
+  - `worm_instr_tiphat`: 2,046 triangles, on its crown like the game's.
+  - `worm_instr_tipcase`: 1,952 triangles, 1.25 m like the game's, burgundy lining.
+  - The game's models stood in while they were made.
+- The open case's lid first stood at 105° and "looked propped on a wall": it lies back on the ground towards the player (185°), so `CaseDistance` went from 1.1 to 1.3.
+- A case packs itself when its player walks `Busking.PackDistance` (10 m, the owner's `Config.lua`) away, with `Busk_PackedFar`. The plan lacked this key: 67 keys now.
+- The world sounds (a coin, banknotes, applause on packing up a set with tips) and the tip glint were built (`winstruments_sounds` with jezzy_mp3toawc, the glint in `worm_instr_marks`), heard and seen in game, and dropped by the owner ("olmasın bunlar"). Nothing replaces them: a tip is told by both sides' notices and the pill. Gone with them: `Config.Effects.HasTipGlint`, `NativeSounds`, `Busking:Tipped`, the assets' audio and their manifest entries. Phase 6's passer-by tips play no coin sound either.
+- The render library's steel cash stack "should look like money". The tip window shows `Banknotes.png`, a realistic banded stack of invented notes made by the assets' `Source/Renders/Banknotes`. It is the owner's exception to UISTYLE 10.1's one material; `CashStack.png` left the script.
+- The temporary `/instrumenttip` (a tip into one's own case), `/instrumentcase` (the case on a harmonica, the `IsCase` payload) and the server's Debug self-tip were deleted; SK12 keeps them gone.
+
+Proved:
+- `checkbusking` BK1–BK5 by `injectbusking`. BK3 holds the dropped sounds and glint gone.
+- SK5 at 67 keys and SK12's new cases; SK8 red on purpose; the guard green.
+- The slop audit was walked on the tip window and the pill in Playwright, at 1080p (En, a long name) and 3440×1440 (Tr).
+- The owner tested every round in game: set up, `/instrumenttip` with presets and a typed amount, too much cash refused, no room, pack up, death, the case, walking away. The logs were clean in every round.
 
 ### Phase 6 — Passers-by
 **Goal:** while a performer is set up and playing, passers-by stop, listen, and sometimes walk up and drop a tip, all within the server owner's Config.
@@ -1284,7 +1310,7 @@ Proved:
 **Goal:** the five plucked instruments are fully playable with their own controls: chords and strumming, frets on the bass, melody over a drone on the bağlama.
 **To do:**
 - First shape early: `ChordCards` + `StringBoard` with the acoustic guitar's sound and no prop — chord on the top row, J/K strum, the mouse dragged across the strings — for the owner to feel before the rest is built.
-- Props: acoustic guitar, electric guitar, bass guitar, ukulele, bağlama (the game's guitars read as reference).
+- Props: acoustic guitar, electric guitar, bass guitar, ukulele, bağlama (the game's guitars read as reference), and the amp moved here from Phase 5 (`prop_amp_01` read as reference): set up with the electric or bass guitar, the server puts it beside the case and the instrument is heard to its `AmpedHearDistance`.
 - Clips: the game's guitar clip as hold and play where it fits; `strum_down`, `strum_up` one-shots on the right arm for all five.
 - Sounds: synthesised plucked strings per instrument (steel, nylon, bass, the bağlama's doubled courses), unless Phase 2 chose the recorded guitar; electric guitar in three tones (clean, crunch, lead) and palm-muted.
 - Page: `ChordCards` (the seven chords of the chosen key on Q–U, Shift for the seventh; key and major/minor on the arrows; numbered `01–07`), `StringBoard` (string keys, J/K strum with a strum's small spread between strings, mouse drag across the strings with its speed), Enter switches to single notes; `FretGrid` for the bass (four rows = four strings, keys along a row = frets); the bağlama's Drone family (melody keys, Space strikes the drone courses, Shift lowers the note a quarter tone); the electric guitar's tone segment and Space = palm mute.

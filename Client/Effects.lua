@@ -2,8 +2,7 @@
 -- white note over their head, on every client that hears them and on their own, for whoever has "note marks" on (and
 -- the server owner has Effects.HasNoteMarks on). The marks take the four note pictures in turn and leave at least
 -- Effects.MarkGap apart, so fast playing draws a line of them rising, never a clump (the owner, 2026-11-14). A relayed
--- note's mark rises when the note sounds, BufferDelay after its batch arrived. The tip glint and the world sounds come
--- in Phase 5.
+-- note's mark rises when the note sounds, BufferDelay after its batch arrived.
 
 -- Globals
 

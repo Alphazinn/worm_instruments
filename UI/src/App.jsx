@@ -4,7 +4,9 @@ import { NUI_EVENTS } from "./Constants/Events";
 import { useInputModality } from "./Hooks/useInputModality";
 import { useNUIEvent } from "./Hooks/useNUIEvent";
 import Sound from "./Modals/Sound/Sound";
+import Tip from "./Modals/Tip/Tip";
 import Play from "./Pages/Play/Play";
+import { useBuskStore } from "./Stores/BuskStore";
 import { useLocaleStore } from "./Stores/LocaleStore";
 import { useSoundStore } from "./Stores/SoundStore";
 import { useUIStore } from "./Stores/UIStore";
@@ -12,6 +14,7 @@ import { AccentProperties } from "./Utils/Accent";
 import { GetImage } from "./Utils/Assets";
 import { SetVolume } from "./Utils/AudioEngine";
 import { ApplyHearing, PlayBatch, SetListener, StopPerformer } from "./Utils/Spatial";
+import BuskPill from "./Views/BuskPill/BuskPill";
 import Styles from "./App.module.scss";
 
 /**
@@ -20,7 +23,8 @@ import Styles from "./App.module.scss";
  * and its steps (UISTYLE 3.1), and the rings pattern's URL as --Rings for the tier-B cards (UISTYLE 9). OpenUI names
  * the page to show and CloseUI hides it; every page is mounted all the time, each in its tier, and shows itself when
  * it is the one named (PLAN section 12). It also hears the sound of the performers nearby for the whole page, since
- * that plays with no page open (PLAN Phase 4).
+ * that plays with no page open (PLAN Phase 4), and the player's own set for the busking pill, which shows with no page
+ * open too (PLAN Phase 5).
  */
 const App = () => {
     useInputModality();
@@ -60,13 +64,22 @@ const App = () => {
     useNUIEvent(NUI_EVENTS.STOP_PERFORMER, HandleStop);
     useNUIEvent(NUI_EVENTS.SET_LISTENER, SetListener);
 
+    // The player's own set (the play screen's button, the pill, shown with no page open too) and the tip window's
+    // performer (PLAN Phase 5).
+    const LoadSet = useBuskStore((State) => State.LoadSet);
+    const LoadOffer = useBuskStore((State) => State.LoadOffer);
+    useNUIEvent(NUI_EVENTS.SET_BUSKING, LoadSet);
+    useNUIEvent(NUI_EVENTS.SET_TIP, LoadOffer);
+
     return (
         <div
             className={Styles.Root}
             style={{ ...AccentProperties(Accent), "--Rings": `url(${GetImage("Texture", "Rings.svg")})` }}
         >
             <Play />
+            <BuskPill />
             <Sound />
+            <Tip />
         </div>
     );
 };

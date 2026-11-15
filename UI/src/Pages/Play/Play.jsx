@@ -2,7 +2,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowUp, Mouse, MouseRight } from "lucide-react";
 
+import Button from "../../Components/Button/Button";
 import Card from "../../Components/Card/Card";
+import Chip from "../../Components/Chip/Chip";
 import HandMark from "../../Components/HandMark/HandMark";
 import KeyBed from "../../Components/KeyBed/KeyBed";
 import KeyHint from "../../Components/KeyHint/KeyHint";
@@ -16,6 +18,7 @@ import { useKeyLayout } from "../../Hooks/useKeyLayout";
 import { useLocale } from "../../Hooks/useLocale";
 import { useNUIEvent } from "../../Hooks/useNUIEvent";
 import { usePointerDrag } from "../../Hooks/usePointerDrag";
+import { useBuskStore } from "../../Stores/BuskStore";
 import { usePlayStore } from "../../Stores/PlayStore";
 import { useSoundStore } from "../../Stores/SoundStore";
 import { useUIStore } from "../../Stores/UIStore";
@@ -84,8 +87,9 @@ const Reserved = {
  *
  * Lua hands the instrument over (SetInstrument): its sound set loads ("tuning up"), and from then on each key down plays
  * its note at once on this page and each key up ends it; both go into the outbox, whose batches Lua relays to everyone
- * in earshot (PLAN Phase 4). A right-button drag turns the camera and the wheel zooms (the
- * page holds the mouse, so it tells Lua). Esc closes the screen; the instrument stays in hand.
+ * in earshot (PLAN Phase 4). The card ends with the set: its status and SET UP (the case goes down in front of the
+ * player and people nearby can tip), undone by PACK UP (PLAN Phase 5). A right-button drag turns the camera and the
+ * wheel zooms (the page holds the mouse, so it tells Lua). Esc closes the screen; the instrument stays in hand.
  *
  * Its signature marks (PLAN section 12): the chamfered card, the handwritten mark beside the hero word, the counter on
  * the octave; the motif, the staff, runs through the card and is the ribbon. The texture is the grain and the vignette.
@@ -116,6 +120,7 @@ const Play = () => {
     const StepBpm = usePlayStore((State) => State.StepBpm);
     const SetPressed = usePlayStore((State) => State.SetPressed);
     const ClearPressed = usePlayStore((State) => State.ClearPressed);
+    const IsSetUp = useBuskStore((State) => State.IsSetUp);
 
     // The sound of the instrument in hand: no state a component draws, so it is kept beside the page.
     const Sound = useRef({ Instrument: null, Player: null, Chain: null });
@@ -310,6 +315,12 @@ const Play = () => {
         SendNUI(SEND_EVENTS.CAMERA_ZOOM, { Delta: Math.sign(Event.deltaY) });
     };
 
+    // SET UP / PACK UP: the button lets go of the focus at once, so a Space or an Enter played next never presses it.
+    const HandleBusk = (Event) => {
+        Event.currentTarget.blur();
+        SendNUI(IsSetUp ? SEND_EVENTS.PACK_UP : SEND_EVENTS.SET_UP);
+    };
+
     const HandleRibbonGone = useCallback((ID) => {
         SetRibbon((Notes) => Notes.filter((Entry) => Entry.ID !== ID));
     }, []);
@@ -374,6 +385,18 @@ const Play = () => {
                                     <Progress Share={LoadShare} IsAction />
                                 </div>
                             )}
+                            <div className={Styles.Busk}>
+                                <div className={Styles.BuskTop}>
+                                    <span className={Styles.Eyebrow}>{L("Busk_Eyebrow")}</span>
+                                    <Chip Tone={IsSetUp ? "Brand" : "Faint"} HasDot>
+                                        {IsSetUp ? L("Status_SetUp") : L("Status_NotSetUp")}
+                                    </Chip>
+                                </div>
+                                <Button Kind={IsSetUp ? "Secondary" : "Primary"} OnClick={HandleBusk}>
+                                    {IsSetUp ? L("Play_PackUp") : L("Play_SetUp")}
+                                </Button>
+                                <p className={Styles.Note}>{IsSetUp ? L("Play_PackUpText") : L("Play_SetUpText")}</p>
+                            </div>
                         </Card>
                     </motion.div>
 

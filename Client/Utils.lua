@@ -166,7 +166,8 @@
         ---@param Name string  The option's own name (adding it again replaces it)
         ---@param Label string  A finished, localised line
         ---@param Distance number  Metres the player stands within for it to offer
-        ---@param CanInteract fun(EntityID: number): boolean  Whether it shows on that entity now
+        ---@param CanInteract fun(EntityID: number, Distance: number): boolean  Whether it shows on that entity now, the
+        -- player standing Distance metres from it
         ---@param OnSelect fun(Data: table)  worm_lib's selection, Data.entity the entity
         ---@return table  One option as worm_lib reads it
         -- worm_lib's option keys are its own: they are written here only, as the other worm_ scripts do.
@@ -181,6 +182,15 @@
         -- never shows).
         Utils.Interact.AddGlobalPlayer = function(Options)
             exports.worm_lib:addInteractionGlobalPlayer(Options)
+        end
+
+        ---@param Models string[]  Model names
+        ---@param Options table[]  From Utils.Interact.Option
+        ---@return nil
+        -- Rings on every entity of these models, each option's canInteract choosing which (a case someone is set up
+        -- with): one gift for every case the server ever puts down, none to keep per entity.
+        Utils.Interact.AddModel = function(Models, Options)
+            exports.worm_lib:addInteractionModel(Models, Options)
         end
 
     -- Interact

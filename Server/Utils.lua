@@ -69,6 +69,34 @@
             return tonumber(exports.worm_lib:GetItemCount(Source, Item)) or 0
         end
 
+        ---@param Source number  Player server id
+        ---@param Account string  "cash" or "bank" (Config.Busking.TipAccount)
+        ---@return number  The player's balance there; 0 when the framework does not answer
+        -- What a tipper can give: the tip window shows it, and Busking:Tip refuses more than it with the amount.
+        Utils.Player.GetMoney = function(Source, Account)
+            return tonumber(exports.worm_lib:getMoney(Source, Account)) or 0
+        end
+
+        ---@param Source number
+        ---@param Amount number  Whole dollars
+        ---@param Account string
+        ---@param Reason string  What the framework's money log says it was
+        ---@return boolean  true when the money was taken; false when the balance was too low
+        -- Takes a tip from its giver, before anything is paid (CODESTYLE 2.13: remove, then add).
+        Utils.Player.RemoveMoney = function(Source, Amount, Account, Reason)
+            return exports.worm_lib:removeMoney(Source, Amount, Account, Reason) == true
+        end
+
+        ---@param Source number
+        ---@param Amount number  Whole dollars
+        ---@param Account string
+        ---@param Reason string
+        ---@return boolean  true when it was paid
+        -- Pays a tip to its performer, only once it was taken from the giver.
+        Utils.Player.AddMoney = function(Source, Amount, Account, Reason)
+            return exports.worm_lib:addMoney(Source, Amount, Account, Reason) == true
+        end
+
         ---@param Handler fun(Source: number)  Runs when a character unloads (worm_lib also runs it on a drop)
         ---@return nil
         -- A character logging out ends their session as a drop does. worm_lib forgets the handler when it restarts,

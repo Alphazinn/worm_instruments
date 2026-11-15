@@ -17,6 +17,12 @@ Languages["Tr"] = {
     ["Play_MetronomeText"] = "Tıkırtıyı yalnız sen duyarsın.",
     ["Play_Bpm"] = "%d BPM",
     ["Play_Loading"] = "AKORT EDİLİYOR",
+    ["Play_SetUp"] = "KURUL",
+    ["Play_SetUpText"] = "Kılıfını buraya koy, yakındakiler sana bahşiş verebilsin.",
+    ["Play_PackUp"] = "TOPLAN",
+    ["Play_PackUpText"] = "Kılıfın geri gelir, bahşiş biter.",
+    ["Status_SetUp"] = "KURULU",
+    ["Status_NotSetUp"] = "KURULU DEĞİL",
 
     -- Key hints: the play screen's, and the worm_lib strip's while the instrument is in hand with the screen closed.
     ["Hint_Play"] = "Çal",
@@ -27,9 +33,13 @@ Languages["Tr"] = {
     ["Hint_Zoom"] = "YAKINLAŞ",
     ["Hint_Close"] = "KAPAT",
 
-    -- The rings on a performer (worm_lib's), and the muted list's button.
+    -- The rings on a performer and on a case (worm_lib's), and the muted list's button. A ring whose gate fails for a
+    -- reason the player can fix shows as "<ring> - <reason>" (CODESTYLE 1.13).
     ["Ring_Mute"] = "Benim için sustur",
     ["Ring_Unmute"] = "Yeniden duy",
+    ["Ring_Tip"] = "Bahşiş ver",
+    ["Ring_Needs"] = "%s - %s",
+    ["Ring_TooFar"] = "yaklaş",
 
     -- The sound settings (Modals/Sound, /instruments).
     ["Sound_Eyebrow"] = "SES · YALNIZ SEN",
@@ -46,6 +56,24 @@ Languages["Tr"] = {
     ["Sound_MutedNoneText"] = "Bir çalgıcıyı üzerindeki halkadan sustur; biriniz çıkana kadar burada listelenir.",
     ["Sound_MutedNow"] = "Artık %s adlı kişiyi duymuyorsun. Ses ayarlarından geri açabilirsin.",
 
+    -- The tip window (Modals/Tip), what a tip says to both sides, and the busking pill (Views/BuskPill).
+    ["Tip_Eyebrow"] = "BAHŞİŞ · %s",
+    ["Tip_Text"] = "Cebindeki nakit doğrudan onun kılıfına gider.",
+    ["Tip_Other"] = "BAŞKA TUTAR",
+    ["Tip_OtherExample"] = "örn. 35",
+    ["Tip_OtherHint"] = "EN ÇOK $%d",
+    ["Tip_Pocket"] = "CEBİNDE",
+    ["Tip_Button"] = "$%d BAHŞİŞ VER",
+    ["Tip_Cancel"] = "PARAN SENDE KALSIN",
+    ["Tip_TooPoor"] = "Yalnızca $%d nakdin var. Daha küçük bir tutar seç.",
+    ["Tip_Gone"] = "Bahşiş girmeden toplandı. Paran sende.",
+    ["Tip_TooFar"] = "Bahşiş vermek için kılıfa yaklaş.",
+    ["Tip_Sent"] = "%s adlı kişiye $%d bahşiş verdin.",
+    ["Tip_Received"] = "%s sana $%d bahşiş verdi.",
+    ["Busk_Eyebrow"] = "BAHŞİŞ · BU SET",
+    ["Busk_Listening"] = "%d DİNLEYEN",
+    ["Busk_PackedFar"] = "Kılıfından uzaklaştığın için toplandı. Çalma ekranından yeniden kurulabilirsin.",
+
     -- The Play key's line in the game's key bindings (Settings > Key Bindings > FiveM).
     ["KeyMapping_Play"] = "Elindeki enstrümanı çal",
 
@@ -58,4 +86,5 @@ Languages["Tr"] = {
     ["Refuse_Cuffed"] = "Ellerin kelepçeli. Önce çözdür.",
     ["Refuse_Down"] = "Bu halde çalamazsın. Önce ayağa kalk.",
     ["Refuse_Disabled"] = "Bu enstrüman bu sunucuda kapalı.",
+    ["Refuse_NoRoomForCase"] = "Burada kılıfına yer yok. Açık bir zemine geç.",
 }

@@ -1,0 +1,31 @@
+@use "../../Styles/tokens" as *;
+
+// The busking pill (tier C): a small card top-right with the one shadow a floating pill may have (UISTYLE 3.4), no
+// texture. Always mounted (CODESTYLE 3.6); Framer Motion shows and hides it. It never takes the pointer.
+.Pill {
+    position: absolute;
+    top: $Size5;
+    right: $Size5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $Size1;
+    padding: calc(#{$Size2} + #{$Size1}) $Size3;
+    border: $BorderHairline;
+    border-radius: $RadiusCard;
+    background: $ColorSurface;
+    box-shadow: $ShadowPill;
+    font-family: $FontBody;
+    color: $ColorText;
+    pointer-events: none;
+}
+
+.Eyebrow {
+    @include Eyebrow;
+}
+
+// The one bold line: this set's tips.
+.Total {
+    @include Display($TypeTitle);
+    overflow: hidden;
+}

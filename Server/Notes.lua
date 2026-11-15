@@ -7,7 +7,8 @@
 -- Globals
 
     ---@type table
-    -- The relay's surface for the other server files: Server/Main.lua ends a performer's relay with their session.
+    -- The relay's surface for the other server files: Server/Main.lua ends a performer's relay with their session, and
+    -- Server/Busking.lua counts a set-up performer's listeners.
     Notes = {}
 
 -- Globals
@@ -171,6 +172,15 @@
         end
 
     -- Relay
+
+    ---@param Source number  A performer
+    ---@param Kind string  The instrument they play
+    ---@return number  How many players their notes reach now
+    -- Server/Busking.lua's count for the busking pill: the same list the relay sends to, counted afresh, so a performer
+    -- who stopped playing still sees who is around.
+    Notes.CountListeners = function(Source, Kind)
+        return #Functions.Relay.Count(GetEntityCoords(GetPlayerPed(Source)), Kind, Source)
+    end
 
     ---@param Source number
     ---@return nil

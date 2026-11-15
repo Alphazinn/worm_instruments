@@ -26,6 +26,22 @@
     color: $ColorText;
 }
 
+// The block, with the hero render on its right when there is one (UISTYLE 6.11: right of the block text, no frame).
+.Head {
+    display: flex;
+    align-items: center;
+    gap: $Size3;
+}
+
+.Lead {
+    flex: 1;
+}
+
+.Hero {
+    flex: none;
+    width: $Size5 * 1.75;
+}
+
 // The body's scroll bar has a lane of its own beside the content, so a long body's bar never lies over a card's edge
 // (Phase 4's sound settings with a long muted list).
 .Body {

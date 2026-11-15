@@ -108,6 +108,23 @@
     color: $ColorTextMuted;
 }
 
+// The set, at the card's foot on a hairline: its eyebrow with the status on the right (UISTYLE 5), the button, the line
+// that says what it does.
+.Busk {
+    display: flex;
+    flex-direction: column;
+    gap: $Size2;
+    padding-top: $Size3;
+    border-top: $BorderHairline;
+}
+
+.BuskTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $Size2;
+}
+
 .Loading {
     display: flex;
     flex-direction: column;

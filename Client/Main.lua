@@ -7,8 +7,9 @@
 -- Globals
 
     ---@type table
-    -- The page pair's surface for the other client files (Client/Settings.lua's sound settings): a page opens only when
-    -- none holds the focus, and closes only when it is the one open, so two pages never fight over the cursor.
+    -- The page pair's surface for the other client files (Client/Settings.lua's sound settings, Client/Busking.lua's
+    -- tip window): a page opens only when none holds the focus, and closes only when it is the one open, so two pages
+    -- never fight over the cursor.
     Screen = {}
 
 -- Globals
@@ -34,7 +35,7 @@
     -- The instrument in hand (its Config.Instruments name), or nil.
     local CurrentKind = nil
     local IsScreenOpen = false
-    -- The page that holds the focus now ("Play", "Sound"), or nil.
+    -- The page that holds the focus now ("Play", "Sound", "Tip"), or nil.
     local OpenPage = nil
     -- Notice_InHand is said once per session: the first time the screen closes with the instrument still in hand.
     local HasToldInHand = false
@@ -55,7 +56,7 @@
 
     -- UI
 
-        ---@param Page "Play" | "Sound"  The page to show
+        ---@param Page "Play" | "Sound" | "Tip"  The page to show
         ---@return nil
         -- The one way the page opens (CODESTYLE 2.22): focus and the page's message together, with what every page
         -- reads first (the locale, the server owner's accent, the hold time).
@@ -245,7 +246,7 @@
 
     -- Session
 
-    ---@param Page "Sound"  A page of another file
+    ---@param Page "Sound" | "Tip"  A page of another file
     ---@return boolean  true when it opened; false while another page holds the focus
     -- Opens a page through the one pair (CODESTYLE 2.22). Refused while any page, this resource's or another's, holds
     -- the focus (PLAN section 9).
@@ -256,7 +257,7 @@
         return true
     end
 
-    ---@param Page "Sound"
+    ---@param Page "Sound" | "Tip"
     ---@return nil
     -- Closes that page, if it is the one open.
     Screen.Close = function(Page)

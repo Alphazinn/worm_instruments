@@ -165,10 +165,50 @@ local Technical <const> = {
     },
 
     Busking = {
-        ---@type number  Metres in front of the player the case or hat is put.
-        CaseDistance = 1.1,
+        ---@type number
+        -- Metres in front of the player the case or hat is put. The open case's lid lies 0.76 m back from its middle
+        -- towards the player (Source/TipCase/Parts.json), so at 1.3 its edge stays about half a metre from their feet.
+        CaseDistance = 1.3,
         ---@type number  Metres from the case within which a player can tip.
         TipDistance = 3.0,
+        ---@type number
+        -- Metres from the case within which its ring shows at all: past TipDistance it says "step closer", so a player
+        -- who sees the case from the street knows to walk up rather than wonder why nothing offers.
+        RingDistance = 7.0,
+        ---@type number
+        -- Metres a standing ped's position (its pelvis) sits above its feet. The server cannot read the ground, so the
+        -- case is made this far below the ped, and the performer's client then settles it on the ground.
+        GroundDrop = 1.0,
+        ---@type number
+        -- Metres the ground under the case's spot may lie above or below the ground under the player before set up is
+        -- refused: a kerb passes, a stair or a ledge does not.
+        GroundStep = 0.5,
+        ---@type number
+        -- Metres above the ground the line from the player to the case's spot is cast at: a wall, a car or a bench in
+        -- the way refuses set up, a kerb does not.
+        RoomHeight = 0.3,
+        ---@type number
+        -- Metres the case's spot is cast past, so a wall right behind it refuses too: the case needs its own room.
+        RoomMargin = 0.3,
+        ---@type number
+        -- Ms between the server's counts of each set-up player's listeners (the Listeners bag): the pill's number, which
+        -- nobody reads to the second.
+        ListenerRefresh = 1000,
+        ---@type number
+        -- Ms the performer's client waits for its new case to stream in and be its own before settling it on the ground.
+        SettleTimeout = 2000,
+        ---@type number  Ms between the performer's client's looks while it waits for its case.
+        SettlePollMs = 50,
+        ---@type string  What the framework's money log says a tip was.
+        MoneyReason = "Busking tip",
+        -- The props a tip lands in, by an instrument's TipProp: the model (worm_instruments_assets' Source/TipHat and
+        -- Source/TipCase), and the degrees it is turned from the player's heading. Both are modelled with +Y as the
+        -- player's own forward, so they take the heading as it is: the case's lid lies back towards the player and its
+        -- lining faces whoever stands in front (the owner, 2026-11-15: a lid standing up looked propped on a wall).
+        Props = {
+            Hat = { Model = "worm_instr_tiphat", Heading = 0.0 },
+            Case = { Model = "worm_instr_tipcase", Heading = 0.0 },
+        },
     },
 
     Npc = {
@@ -293,8 +333,6 @@ local Technical <const> = {
         -- 2026-11-14): 1.0 drew a note as big as a head.
         MarkScale = 0.3,
     },
-
-    -- Effects (Phase 5): the glint's name. NativeSounds (Phase 5): Bank, SoundSet, the sound names.
 }
 
 ---@param Into table # The table being filled.

@@ -14,7 +14,7 @@ import Styles from "./Modal.module.scss";
  * It opens with the block -- an eyebrow, the heading, one sentence naming the consequence -- then its body, then its
  * footer: the one primary action, full width (a hold button when the action cannot be undone), and under it the way
  * back, a clickable "[Esc] <CancelLabel>" key hint, never a boxed button beside the primary (the owner, 2026-11-01). No
- * icon. Portalled to the page's body so its scrim covers the whole game, not only the panel that asks. Esc takes the
+ * icon; a Hero (one render of the library, UISTYLE 6.11) may sit on the block's right. Portalled to the page's body so its scrim covers the whole game, not only the panel that asks. Esc takes the
  * question back through OnCancel and stops there, so the screen under it stays.
  *
  * @param {{
@@ -23,6 +23,7 @@ import Styles from "./Modal.module.scss";
  *   Heading: React.ReactNode,
  *   Description: React.ReactNode,
  *   Status?: React.ReactNode,
+ *   Hero?: React.ReactNode,
  *   Footer?: React.ReactNode,
  *   OnCancel: () => void,
  *   CancelLabel: React.ReactNode,
@@ -31,7 +32,7 @@ import Styles from "./Modal.module.scss";
  * @returns {JSX.Element}
  */
 const Modal = (Props) => {
-    const { IsOpen, Eyebrow, Heading, Description, Status, Footer, OnCancel, CancelLabel } = Props;
+    const { IsOpen, Eyebrow, Heading, Description, Status, Hero, Footer, OnCancel, CancelLabel } = Props;
 
     // heard in the capture phase, before the screen's own Esc on the window
     useEffect(() => {
@@ -52,7 +53,17 @@ const Modal = (Props) => {
             {IsOpen && (
                 <motion.div key="Modal" className={Styles.Scrim} variants={FadeVariants} initial="Closed" animate="Open" exit="Closed">
                     <motion.div className={Styles.Modal} variants={RiseVariants} initial="Closed" animate="Open" exit="Closed">
-                        <Block Eyebrow={Eyebrow} Heading={Heading} Description={Description} Status={Status} Size="Heading" />
+                        <div className={Styles.Head}>
+                            <Block
+                                Eyebrow={Eyebrow}
+                                Heading={Heading}
+                                Description={Description}
+                                Status={Status}
+                                Size="Heading"
+                                ClassName={Styles.Lead}
+                            />
+                            {Hero && <div className={Styles.Hero}>{Hero}</div>}
+                        </div>
                         {Props.children && <ScrollArea ClassName={Styles.Body}>{Props.children}</ScrollArea>}
                         <div className={Styles.Footer}>
                             {Footer}

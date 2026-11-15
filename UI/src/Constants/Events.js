@@ -13,6 +13,7 @@ export const NUI_EVENTS = {
     CLOSE_UI: "worm_instruments:NUI:CloseUI",
     SET_INSTRUMENT: "worm_instruments:NUI:SetInstrument",
     SET_BUSKING: "worm_instruments:NUI:SetBusking",
+    SET_TIP: "worm_instruments:NUI:SetTip",
     PLAY_NOTES: "worm_instruments:NUI:PlayNotes",
     STOP_PERFORMER: "worm_instruments:NUI:StopPerformer",
     SET_LISTENER: "worm_instruments:NUI:SetListener",

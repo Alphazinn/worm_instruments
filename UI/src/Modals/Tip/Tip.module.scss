@@ -1,0 +1,40 @@
+@use "../../Styles/tokens" as *;
+@use "../../Styles/motif" as *;
+
+// The tip window (tier B, PLAN section 12): the amount in one patterned card (the presets, the typed field), the staff,
+// then the pocket.
+
+.Amount {
+    gap: $Size3;
+}
+
+// A preset is money, and money is in the display font (UISTYLE 3.2), a step above the segment's own label.
+.Preset {
+    @include Display($TypeBody);
+}
+
+// The script's motif between the amount and the pocket: the five staff lines where a plain panel has a hairline.
+.Staff {
+    @include StaffRule;
+    flex: none;
+}
+
+// What the player has: its eyebrow on the left, the sum in the display font on the right.
+.Pocket {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $Size3;
+}
+
+.Eyebrow {
+    @include Eyebrow;
+}
+
+// Its box keeps what overflows it: the display font's lines stand a few pixels past their box at any line height, and
+// the modal's body scrolled by those pixels with its edge faded over the sum (Playwright, 2026-11-15).
+.Cash {
+    @include Display($TypeTitle);
+    overflow: hidden;
+    color: $ColorText;
+}
